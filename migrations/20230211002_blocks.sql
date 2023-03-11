@@ -24,5 +24,6 @@ CREATE TABLE IF NOT EXISTS "parking"."blocks" (
     "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     "updatedBy" CHARACTER VARYING,
 
-    CONSTRAINT "pk_blocks" PRIMARY KEY ("id")
+    CONSTRAINT "pk_blocks" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_blocks_parking_lot" FOREIGN KEY ("parkingLotId") REFERENCES "parking"."parking_lot"(id)
 );
