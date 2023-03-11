@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "indent": "off",
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    // override default options for rules from base configurations
+    // "comma-dangle": ["error", "always"],
+    "no-cond-assign": ["error", "always"],
+    // disable rules from base configurations
+    "no-console": 2 // Remember, this means error!
+  }
+}
