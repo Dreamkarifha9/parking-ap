@@ -23,7 +23,6 @@ export class ParkingAppFloorsController {
     private readonly parkingAppFloorsService: ParkingAppFloorsService,
   ) { }
 
-
   @Post()
   @HttpCode(201)
   @ApiBody({ type: CreateParkingAppFloorDto })
@@ -40,26 +39,26 @@ export class ParkingAppFloorsController {
     return this.parkingAppFloorsService.create(createParkingAppFloorDto);
   }
 
-  @Get()
-  findAll() {
-    return this.parkingAppFloorsService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.parkingAppFloorsService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingAppFloorsService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.parkingAppFloorsService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParkingAppFloorDto: UpdateParkingAppFloorDto,
-  ) {
-    return this.parkingAppFloorsService.update(+id, updateParkingAppFloorDto);
-  }
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateParkingAppFloorDto: UpdateParkingAppFloorDto,
+  // ) {
+  //   return this.parkingAppFloorsService.update(+id, updateParkingAppFloorDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingAppFloorsService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.parkingAppFloorsService.remove(+id);
+  // }
 }

@@ -7,6 +7,9 @@ export class VWParkingSlot extends BasicViewData {
     parkingLotId?: number;
 
     @ViewColumn()
+    parkingName?: string;
+
+    @ViewColumn()
     blockId?: number;
 
     @ViewColumn()
@@ -14,6 +17,9 @@ export class VWParkingSlot extends BasicViewData {
 
     @ViewColumn()
     blockSize?: string;
+
+    @ViewColumn()
+    carSize?: string;
 
     @ViewColumn()
     floorId?: number;

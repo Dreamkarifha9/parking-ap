@@ -23,7 +23,6 @@ export class ParkingAppSlotsController {
     private readonly parkingAppSlotsService: ParkingAppSlotsService,
   ) { }
 
-
   @Post()
   @HttpCode(201)
   @ApiBody({ type: CreateParkingAppSlotDto })
@@ -35,26 +34,26 @@ export class ParkingAppSlotsController {
     return this.parkingAppSlotsService.create(createParkingAppSlotDto);
   }
 
-  @Get()
-  findAll() {
-    return this.parkingAppSlotsService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.parkingAppSlotsService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingAppSlotsService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.parkingAppSlotsService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParkingAppSlotDto: UpdateParkingAppSlotDto,
-  ) {
-    return this.parkingAppSlotsService.update(+id, updateParkingAppSlotDto);
-  }
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateParkingAppSlotDto: UpdateParkingAppSlotDto,
+  // ) {
+  //   return this.parkingAppSlotsService.update(+id, updateParkingAppSlotDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingAppSlotsService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.parkingAppSlotsService.remove(+id);
+  // }
 }

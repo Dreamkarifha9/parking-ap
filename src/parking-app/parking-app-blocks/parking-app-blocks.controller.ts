@@ -38,26 +38,26 @@ export class ParkingAppBlocksController {
     );
     return this.parkingAppBlocksService.create(createParkingAppBlockDto);
   }
-  @Get()
-  findAll() {
-    return this.parkingAppBlocksService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.parkingAppBlocksService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingAppBlocksService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.parkingAppBlocksService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParkingAppBlockDto: UpdateParkingAppBlockDto,
-  ) {
-    return this.parkingAppBlocksService.update(+id, updateParkingAppBlockDto);
-  }
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateParkingAppBlockDto: UpdateParkingAppBlockDto,
+  // ) {
+  //   return this.parkingAppBlocksService.update(+id, updateParkingAppBlockDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingAppBlocksService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.parkingAppBlocksService.remove(+id);
+  // }
 }

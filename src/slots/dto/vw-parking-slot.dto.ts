@@ -10,6 +10,11 @@ export class VWParkingSlotDto extends BaseDataDto {
     parkingLotId?: number;
 
     @ApiProperty()
+    @IsString()
+    @Type(() => String)
+    parkingName?: string;
+
+    @ApiProperty()
     @IsNumber()
     @Type(() => Number)
     blockId?: number;
@@ -23,6 +28,11 @@ export class VWParkingSlotDto extends BaseDataDto {
     @IsString()
     @Type(() => String)
     blockSize?: string;
+
+    @ApiProperty()
+    @IsString()
+    @Type(() => String)
+    carSize?: string;
 
     @ApiProperty()
     @IsNumber()

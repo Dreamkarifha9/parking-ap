@@ -7,12 +7,20 @@ import {
   Param,
   Delete,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { ParkingAppParkingLotsService } from './parking-app-parking-lots.service';
 import { CreateParkingAppParkingLotDto } from './dto/create-parking-app-parking-lot.dto';
 import { UpdateParkingAppParkingLotDto } from './dto/update-parking-app-parking-lot.dto';
-import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ResponseParkingLotDto } from './dto/response-parking-lot.dto';
+import { VWParkingSlotsDto } from 'src/slots/dto/vw-parking-slots.dto';
+import { SearchVWParkingSlotDto } from 'src/slots/dto/search-vw-parking-slot.dto';
 
 @ApiTags('App::ParkingApp::ParkingLots')
 @Controller('parking-app-parking-lots')
@@ -35,28 +43,37 @@ export class ParkingAppParkingLotsController {
   }
 
   @Get()
-  findAll() {
-    return this.parkingAppParkingLotsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingAppParkingLotsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParkingAppParkingLotDto: UpdateParkingAppParkingLotDto,
+  @ApiOkResponse({
+    description: 'A successful response.',
+    type: VWParkingSlotsDto,
+  })
+  findAll(
+    @Query()
+    query: SearchVWParkingSlotDto,
   ) {
-    return this.parkingAppParkingLotsService.update(
-      +id,
-      updateParkingAppParkingLotDto,
-    );
+    query.deleted = query.deleted || false;
+    query.size = query.size || 20;
+    return this.parkingAppParkingLotsService.findAll(query);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingAppParkingLotsService.remove(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.parkingAppParkingLotsService.findOne(+id);
+  // }
+
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateParkingAppParkingLotDto: UpdateParkingAppParkingLotDto,
+  // ) {
+  //   return this.parkingAppParkingLotsService.update(
+  //     +id,
+  //     updateParkingAppParkingLotDto,
+  //   );
+  // }
+
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.parkingAppParkingLotsService.remove(+id);
+  // }
 }

@@ -25,7 +25,17 @@ export class VWParkingSlotsService {
     ) { }
 
     async findAll(search: SearchVWParkingSlotDto): Promise<VWParkingSlotsDto> {
-        const { page, size, query, active, deleted, sortBy, orderBy } = search;
+        const {
+            page,
+            size,
+            query,
+            active,
+            deleted,
+            sortBy,
+            orderBy,
+            numberPlate,
+            blockSize,
+        } = search;
 
         const { commonQueries, commonParams } = getCommonQueryForBuilder(
             'vw_parking_slots',
@@ -51,13 +61,39 @@ export class VWParkingSlotsService {
         // NOTED: Refered to this stackoverfow [https://stackoverflow.com/a/57648345]
         const builder =
             this.vWParkingSlotsRepository.createQueryBuilder('vw_parking_slots');
+        builder.select([
+            'vw_parking_slots.numberPlate',
+            'vw_parking_slots.parkingName',
+            'vw_parking_slots.blockSize',
+            'vw_parking_slots.carSize',
+            'vw_parking_slots.blockId',
+            'vw_parking_slots.blockCode',
+            'vw_parking_slots.floorNumber',
+            'vw_parking_slots.slotNumber',
+            'vw_parking_slots.slotIsAvailable',
+            'vw_parking_slots.active',
+            'vw_parking_slots.deleted',
+            'vw_parking_slots.createdAt',
+            'vw_parking_slots.createdBy',
+            'vw_parking_slots.updatedAt',
+            'vw_parking_slots.updatedBy',
+        ]);
 
         builder.where(commonQueries, commonParams);
 
         if (querySql) {
             builder.andWhere(querySql, params);
         }
-
+        if (numberPlate) {
+            builder.andWhere('vw_parking_slots.numberPlate = :numberPlate', {
+                numberPlate,
+            });
+        }
+        if (blockSize) {
+            builder.andWhere('vw_parking_slots.blockSize = :blockSize', {
+                blockSize,
+            });
+        }
         const [data, count] = await builder
             .orderBy({ ..._orderBlockSize, ..._orderFloorNumber })
             .skip(skip)

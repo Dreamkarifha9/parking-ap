@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ParkingLotService } from 'src/parking-lot/parking-lot.service';
+import { SearchVWParkingSlotDto } from 'src/slots/dto/search-vw-parking-slot.dto';
+import { VWParkingSlotsService } from 'src/slots/vw-parking-slots.service';
 import { CreateParkingAppParkingLotDto } from './dto/create-parking-app-parking-lot.dto';
 import { UpdateParkingAppParkingLotDto } from './dto/update-parking-app-parking-lot.dto';
 
@@ -8,13 +10,16 @@ export class ParkingAppParkingLotsService {
   private readonly logger: Logger = new Logger(
     ParkingAppParkingLotsService.name,
   );
-  constructor(private readonly parkingLotService: ParkingLotService) { }
+  constructor(
+    private readonly parkingLotService: ParkingLotService,
+    private readonly vWParkingSlotsService: VWParkingSlotsService,
+  ) { }
   create(createParkingAppParkingLotDto: CreateParkingAppParkingLotDto) {
     return this.parkingLotService.create(createParkingAppParkingLotDto);
   }
 
-  findAll() {
-    return `This action returns all parkingAppParkingLots`;
+  findAll(query: SearchVWParkingSlotDto) {
+    return this.vWParkingSlotsService.findAll(query);
   }
 
   findOne(id: number) {
