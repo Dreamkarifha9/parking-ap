@@ -5,6 +5,8 @@ import { SlotDto } from './slot.dto';
 
 export class CreateSlotDto extends OmitType(SlotDto, [
     'id',
+    'slotNumber',
+    'isAvailable',
     'active',
     'deleted',
     'createdAt',

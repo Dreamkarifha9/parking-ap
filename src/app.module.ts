@@ -9,6 +9,7 @@ import { ParkingAppBlocksModule } from './parking-app/parking-app-blocks/parking
 import { FloorsModule } from './floors/floors.module';
 import { ParkingAppFloorsModule } from './parking-app/parking-app-floors/parking-app-floors.module';
 import { SlotsModule } from './slots/slots.module';
+import { ParkingAppSlotsModule } from './parking-app/parking-app-slots/parking-app-slots.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SlotsModule } from './slots/slots.module';
     FloorsModule,
     ParkingAppFloorsModule,
     SlotsModule,
+    ParkingAppSlotsModule,
   ],
   controllers: [],
   providers: [],
