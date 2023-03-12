@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 import { CreateSlotDto } from './dto/create-slot.dto';
-import { UpdateSlotDto } from './dto/update-slot.dto';
+
 import { Slot } from './entities/slot.entity';
 import { addMilliseconds } from 'date-fns';
 @Injectable()
@@ -81,11 +81,13 @@ export class SlotsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} slot`;
+    return this.slotsRepository.findOne({ where: { id } });
   }
-
-  update(id: number, updateSlotDto: UpdateSlotDto) {
-    return `This action updates a #${id} slot`;
+  async update(slot: Slot, dto: Partial<Slot>) {
+    // Reason => https://github.com/typeorm/typeorm/issues/5131#issuecomment-1030895756
+    const updateSlot = Object.assign(slot, dto);
+    this.logger.debug(`updateSlot ${JSON.stringify(updateSlot)}`);
+    return this.slotsRepository.save(updateSlot, { reload: true });
   }
 
   remove(id: number) {

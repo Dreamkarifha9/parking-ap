@@ -52,5 +52,5 @@ export class VWParkingSlotDto extends BaseDataDto {
     @ApiProperty()
     @IsBoolean()
     @Type(() => Boolean)
-    slotIsAvaiable?: boolean;
+    slotIsAvailable?: boolean;
 }

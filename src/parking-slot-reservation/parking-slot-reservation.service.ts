@@ -1,12 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SlotsService } from 'src/slots/slots.service';
-
+import { VWParkingSlotsService } from 'src/slots/vw-parking-slots.service';
 import { Repository } from 'typeorm';
 import { CreateParkingSlotReservationDto } from './dto/create-parking-slot-reservation.dto';
 import { UpdateParkingSlotReservationDto } from './dto/update-parking-slot-reservation.dto';
 import { ParkingSlotReservation } from './entities/parking-slot-reservation.entity';
-
+import { v4 as uuid } from 'uuid';
+import { SlotsService } from 'src/slots/slots.service';
 @Injectable()
 export class ParkingSlotReservationService {
   private readonly logger: Logger = new Logger(
@@ -15,9 +15,39 @@ export class ParkingSlotReservationService {
   constructor(
     @InjectRepository(ParkingSlotReservation)
     private readonly parkingSlotReservationRepository: Repository<ParkingSlotReservation>,
+    private readonly vWParkingSlotsService: VWParkingSlotsService,
     private readonly slotsService: SlotsService,
   ) { }
-  create(createParkingSlotReservationDto: CreateParkingSlotReservationDto) {
+  async checkIn(
+    createParkingSlotReservationDto: CreateParkingSlotReservationDto,
+  ) {
+    const findNearbyExit = await this.vWParkingSlotsService.findNearbyExit();
+    if (findNearbyExit) {
+      const { slotId } = findNearbyExit;
+      const mapingDto = {
+        id: uuid(),
+        parkingSlotId: slotId,
+        starttimestamp: new Date(),
+        bookingDate: new Date(),
+        ...createParkingSlotReservationDto,
+      };
+      const newParkingSlotReservation =
+        this.parkingSlotReservationRepository.create(mapingDto);
+      this.logger.debug(
+        `newParkingSlotReservation ${JSON.stringify(
+          newParkingSlotReservation,
+        )}`,
+      );
+      await this.parkingSlotReservationRepository.save(
+        newParkingSlotReservation,
+      );
+      // update status isAvailable in slot table
+      const findSlot = await this.slotsService.findOne(slotId);
+      await this.slotsService.update(findSlot, { isAvailable: true });
+    } else {
+      throw new HttpException(`slot has been used up`, HttpStatus.NOT_FOUND);
+    }
+    this.logger.debug(`findNearbyExit ${JSON.stringify(findNearbyExit)}`);
     return 'This action adds a new parkingSlotReservation';
   }
 

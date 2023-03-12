@@ -7,16 +7,13 @@ export class ParkingSlotReservation extends BasicData {
     id: string;
 
     @Column({ nullable: false })
-    name: string;
-
-    @Column({ nullable: false })
     parkingSlotId: number;
 
     @Column({ type: 'timestamptz' })
     startTimestamp: Date;
 
-    @Column({ type: 'timestamptz' })
-    exitTimestamp: Date;
+    @Column({ type: 'timestamptz', nullable: true })
+    exitTimestamp?: Date;
 
     @Column({ nullable: false })
     durationInMinutes: number;

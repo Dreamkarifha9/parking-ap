@@ -11,6 +11,7 @@ import { ParkingAppFloorsModule } from './parking-app/parking-app-floors/parking
 import { SlotsModule } from './slots/slots.module';
 import { ParkingAppSlotsModule } from './parking-app/parking-app-slots/parking-app-slots.module';
 import { ParkingSlotReservationModule } from './parking-slot-reservation/parking-slot-reservation.module';
+import { CustomerAppSlotReservationsModule } from './customer-app/customer-app-slot-reservations/customer-app-slot-reservations.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ParkingSlotReservationModule } from './parking-slot-reservation/parking
     SlotsModule,
     ParkingAppSlotsModule,
     ParkingSlotReservationModule,
+    CustomerAppSlotReservationsModule,
   ],
   controllers: [],
   providers: [],

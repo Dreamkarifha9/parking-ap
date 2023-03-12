@@ -15,17 +15,17 @@ export class ParkingSlotReservationDto extends BaseDataDto {
     @Type(() => Number)
     parkingSlotId: number;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @Type(() => Date)
     @IsOptional()
-    startTimestamp?: Date;
+    startTimestamp: Date;
 
     @ApiPropertyOptional()
     @Type(() => Date)
     @IsOptional()
     exitTimestamp?: Date;
 
-    @ApiProperty()
+    @ApiProperty({ default: 0 })
     @IsNumber()
     @Type(() => Number)
     durationInMinutes: number;

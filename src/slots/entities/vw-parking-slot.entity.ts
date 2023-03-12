@@ -31,5 +31,5 @@ export class VWParkingSlot extends BasicViewData {
     slotNumber?: number;
 
     @ViewColumn()
-    slotIsAvaiable?: boolean;
+    slotIsAvailable?: boolean;
 }

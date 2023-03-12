@@ -4,6 +4,8 @@ import { ParkingSlotReservationDto } from './parking-slot-reservation.dto';
 export class CreateParkingSlotReservationDto extends OmitType(
     ParkingSlotReservationDto,
     [
+        'id',
+        'parkingSlotId',
         'startTimestamp',
         'exitTimestamp',
         'durationInMinutes',

@@ -75,11 +75,13 @@ export class VWParkingSlotsService {
         result.data = newData;
         return result;
     }
-
     async findNearbyExit(): Promise<VWParkingSlotDto> {
         const row = await this.vWParkingSlotsRepository
             .createQueryBuilder('vw_parking_slots')
             .select()
+            .where('vw_parking_slots.slotIsAvailable = :slotIsAvailable', {
+                slotIsAvailable: false,
+            })
             .orderBy('"vw_parking_slots"."blockSize"', 'ASC')
             .addOrderBy('"vw_parking_slots"."floorNumber"', 'ASC')
             .getOne();
