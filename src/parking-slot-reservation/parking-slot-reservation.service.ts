@@ -26,7 +26,7 @@ export class ParkingSlotReservationService {
       const { slotId } = findNearbyExit;
       const mapingDto = {
         id: uuid(),
-        parkingSlotId: slotId,
+        slotId,
         starttimestamp: new Date(),
         bookingDate: new Date(),
         ...createParkingSlotReservationDto,

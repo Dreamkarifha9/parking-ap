@@ -13,7 +13,7 @@ export class ParkingSlotReservationDto extends BaseDataDto {
     @ApiProperty()
     @IsNumber()
     @Type(() => Number)
-    parkingSlotId: number;
+    slotId: number;
 
     @ApiProperty()
     @Type(() => Date)

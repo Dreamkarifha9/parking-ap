@@ -7,7 +7,7 @@ export class ParkingSlotReservation extends BasicData {
     id: string;
 
     @Column({ nullable: false })
-    parkingSlotId: number;
+    slotId: number;
 
     @Column({ type: 'timestamptz' })
     startTimestamp: Date;

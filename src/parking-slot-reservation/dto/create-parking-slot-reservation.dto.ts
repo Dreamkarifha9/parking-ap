@@ -5,7 +5,7 @@ export class CreateParkingSlotReservationDto extends OmitType(
     ParkingSlotReservationDto,
     [
         'id',
-        'parkingSlotId',
+        'slotId',
         'startTimestamp',
         'exitTimestamp',
         'durationInMinutes',
