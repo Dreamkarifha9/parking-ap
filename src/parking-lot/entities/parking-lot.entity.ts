@@ -1,4 +1,3 @@
-import { ApiTags } from '@nestjs/swagger';
 import { BasicData } from 'src/shared/entities';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 

@@ -12,6 +12,7 @@ import { ParkingAppParkingLotsService } from './parking-app-parking-lots.service
 import { CreateParkingAppParkingLotDto } from './dto/create-parking-app-parking-lot.dto';
 import { UpdateParkingAppParkingLotDto } from './dto/update-parking-app-parking-lot.dto';
 import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ResponseParkingLotDto } from './dto/response-parking-lot.dto';
 
 @ApiTags('App::ParkingApp::ParkingLots')
 @Controller('parking-app-parking-lots')
@@ -25,6 +26,7 @@ export class ParkingAppParkingLotsController {
   @ApiBody({ type: CreateParkingAppParkingLotDto })
   @ApiCreatedResponse({
     description: 'ParkingLots has created successfully.',
+    type: ResponseParkingLotDto,
   })
   create(@Body() createParkingAppParkingLotDto: CreateParkingAppParkingLotDto) {
     return this.parkingAppParkingLotsService.create(
