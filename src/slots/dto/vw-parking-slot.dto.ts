@@ -40,6 +40,11 @@ export class VWParkingSlotDto extends BaseDataDto {
     numberOfSlot?: number;
 
     @ApiProperty()
+    @IsString()
+    @Type(() => String)
+    numberPlate?: string;
+
+    @ApiProperty()
     @IsNumber()
     @Type(() => Number)
     slotId?: number;

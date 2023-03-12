@@ -91,4 +91,8 @@ export class VWParkingSlotsService {
             .getOne();
         return plainToInstance(VWParkingSlotDto, row);
     }
+
+    async findOneBySearch(q: Partial<VWParkingSlotDto>) {
+        return this.vWParkingSlotsRepository.findOneBy({ ...q });
+    }
 }

@@ -25,6 +25,9 @@ export class VWParkingSlot extends BasicViewData {
     numberOfSlot?: number;
 
     @ViewColumn()
+    numberPlate?: string;
+
+    @ViewColumn()
     slotId?: number;
 
     @ViewColumn()

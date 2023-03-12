@@ -7,6 +7,7 @@ import { UpdateParkingSlotReservationDto } from './dto/update-parking-slot-reser
 import { ParkingSlotReservation } from './entities/parking-slot-reservation.entity';
 import { v4 as uuid } from 'uuid';
 import { SlotsService } from 'src/slots/slots.service';
+import { ParkingSlotReservationDto } from './dto/parking-slot-reservation.dto';
 @Injectable()
 export class ParkingSlotReservationService {
   private readonly logger: Logger = new Logger(
@@ -21,6 +22,18 @@ export class ParkingSlotReservationService {
   async checkIn(
     createParkingSlotReservationDto: CreateParkingSlotReservationDto,
   ) {
+    const plateNumber = await this.vWParkingSlotsService.findOneBySearch({
+      numberPlate: createParkingSlotReservationDto.numberPlate,
+      active: true,
+      deleted: false,
+      slotIsAvailable: true,
+    });
+    if (plateNumber) {
+      throw new HttpException(
+        `number Plate Has Already isUsed.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const findNearbyExit = await this.vWParkingSlotsService.findNearbyExit(
       createParkingSlotReservationDto.carSize,
     );
@@ -51,6 +64,10 @@ export class ParkingSlotReservationService {
     } else {
       throw new HttpException(`slot has been used up`, HttpStatus.NOT_FOUND);
     }
+  }
+
+  async findOneBySearch(q: Partial<ParkingSlotReservationDto>) {
+    return this.parkingSlotReservationRepository.findOneBy({ ...q });
   }
 
   findAll() {
