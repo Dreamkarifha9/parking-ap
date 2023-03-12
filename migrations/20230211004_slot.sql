@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "parking"."slots" (
     id BIGINT DEFAULT nextval('"parking".slot_id_seq'::regclass),
     "floorId" INT,
     "slotNumber" INT,
-    "isSlotAvailable" BOOLEAN DEFAULT false,
+    "isAvailable" BOOLEAN DEFAULT false,
     "active" BOOLEAN DEFAULT true,
     "deleted" BOOLEAN DEFAULT false,
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
