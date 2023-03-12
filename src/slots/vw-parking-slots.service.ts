@@ -16,8 +16,8 @@ import { VWParkingSlotsDto } from './dto/vw-parking-slots.dto';
 import { VWParkingSlot } from './entities/vw-parking-slot.entity';
 
 @Injectable()
-export class VWShopProductsService {
-    private readonly logger: Logger = new Logger(VWShopProductsService.name);
+export class VWParkingSlotsService {
+    private readonly logger: Logger = new Logger(VWParkingSlotsService.name);
     constructor(
         @InjectRepository(VWParkingSlot)
         private readonly vWParkingSlotsRepository: Repository<VWParkingSlot>,
