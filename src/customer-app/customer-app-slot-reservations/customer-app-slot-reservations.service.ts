@@ -11,13 +11,12 @@ export class CustomerAppSlotReservationsService {
   constructor(
     private readonly parkingSlotReservationService: ParkingSlotReservationService,
   ) { }
-  create(
+  async checkIn(
     createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
   ) {
-    this.parkingSlotReservationService.checkIn(
+    return await this.parkingSlotReservationService.checkIn(
       createCustomerAppSlotReservationDto,
     );
-    return 'This action adds a new customerAppSlotReservation';
   }
 
   findAll() {

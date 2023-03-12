@@ -24,7 +24,7 @@ export class CustomerAppSlotReservationsController {
     @Body()
     createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
   ) {
-    return this.customerAppSlotReservationsService.create(
+    return this.customerAppSlotReservationsService.checkIn(
       createCustomerAppSlotReservationDto,
     );
   }
@@ -34,7 +34,7 @@ export class CustomerAppSlotReservationsController {
     @Body()
     createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
   ) {
-    return this.customerAppSlotReservationsService.create(
+    return this.customerAppSlotReservationsService.checkIn(
       createCustomerAppSlotReservationDto,
     );
   }

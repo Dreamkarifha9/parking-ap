@@ -44,11 +44,11 @@ export class ParkingSlotReservationService {
       // update status isAvailable in slot table
       const findSlot = await this.slotsService.findOne(slotId);
       await this.slotsService.update(findSlot, { isAvailable: true });
+      this.logger.debug(`findNearbyExit ${JSON.stringify(findNearbyExit)}`);
+      return { suscuess: true };
     } else {
       throw new HttpException(`slot has been used up`, HttpStatus.NOT_FOUND);
     }
-    this.logger.debug(`findNearbyExit ${JSON.stringify(findNearbyExit)}`);
-    return 'This action adds a new parkingSlotReservation';
   }
 
   findAll() {

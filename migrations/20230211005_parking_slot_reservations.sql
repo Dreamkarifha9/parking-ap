@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS "parking"."parking_slot_reservations";
 CREATE TABLE IF NOT EXISTS "parking"."parking_slot_reservations" (
     id uuid NOT NULL,
-    "parkingSlotId" INT,
+    "slotId" INT,
     "startTimestamp" timestamptz NOT NULL DEFAULT now(),
     "exitTimestamp" timestamptz  NULL DEFAULT NULL,
     "durationInMinutes" INT DEFAULT 0,
@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS "parking"."parking_slot_reservations" (
     "updatedBy" CHARACTER VARYING,
 
     CONSTRAINT "pk_parking_slot_reservations" PRIMARY KEY ("id"),
-    CONSTRAINT "fk_parking_slot_reservations_parking_lot" FOREIGN KEY ("parkingSlotId") REFERENCES "parking"."parking_lot"(id)
+    CONSTRAINT "fk_parking_slot_reservations_parking_lot" FOREIGN KEY ("slotId") REFERENCES "parking"."slots"(id)
 );
