@@ -14,9 +14,4 @@ export class ParkingLotDto extends BaseDataDto {
     @IsNotEmpty()
     @Type(() => String)
     name: string;
-
-    @ApiProperty()
-    @IsNumber()
-    @Type(() => Number)
-    numberOfBlocks: number;
 }

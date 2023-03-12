@@ -13,6 +13,7 @@ export class ParkingLotService {
   constructor(
     @InjectRepository(ParkingLot)
     private readonly parkingLotRepository: Repository<ParkingLot>,
+
   ) { }
   async create(createParkingLotDto: CreateParkingLotDto) {
     const parkingLot: ParkingLot = {

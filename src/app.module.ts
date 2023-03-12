@@ -10,6 +10,7 @@ import { FloorsModule } from './floors/floors.module';
 import { ParkingAppFloorsModule } from './parking-app/parking-app-floors/parking-app-floors.module';
 import { SlotsModule } from './slots/slots.module';
 import { ParkingAppSlotsModule } from './parking-app/parking-app-slots/parking-app-slots.module';
+import { ParkingSlotReservationModule } from './parking-slot-reservation/parking-slot-reservation.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ParkingAppSlotsModule } from './parking-app/parking-app-slots/parking-a
     ParkingAppFloorsModule,
     SlotsModule,
     ParkingAppSlotsModule,
+    ParkingSlotReservationModule,
   ],
   controllers: [],
   providers: [],

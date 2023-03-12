@@ -8,7 +8,4 @@ export class ParkingLot extends BasicData {
 
     @Column({ nullable: false })
     name: string;
-
-    @Column({ type: 'int' })
-    numberOfBlocks: number;
 }
