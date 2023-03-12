@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "parking"."floors" (
     id BIGINT DEFAULT nextval('"parking".floor_id_seq'::regclass),
     "blockId" INT,
     "floorNumber" INT,
-    "numberOfSlots" INT,
+    "numberOfSlot" INT,
     "isFloorFull" BOOLEAN DEFAULT false,
     "active" BOOLEAN DEFAULT true,
     "deleted" BOOLEAN DEFAULT false,

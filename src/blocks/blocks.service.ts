@@ -4,14 +4,14 @@ import { plainToInstance } from 'class-transformer';
 import { ILike, Repository } from 'typeorm';
 import { CreateBlockDto } from './dto/create-block.dto';
 import { UpdateBlockDto } from './dto/update-block.dto';
-import { Blocks } from './entities/block.entity';
+import { Block } from './entities/block.entity';
 
 @Injectable()
 export class BlocksService {
   private readonly logger: Logger = new Logger(BlocksService.name);
   constructor(
-    @InjectRepository(Blocks)
-    private readonly blocksRepository: Repository<Blocks>,
+    @InjectRepository(Block)
+    private readonly blocksRepository: Repository<Block>,
   ) { }
   async create(createBlockDto: CreateBlockDto[]) {
     this.logger.debug(`createBlockDto ${createBlockDto[0].blockSize}`);
@@ -30,6 +30,7 @@ export class BlocksService {
         blockCode: createBlockDto[i].blockCode,
         blockSize: createBlockDto[i].blockSize,
         isBlockFull: createBlockDto[i].isBlockFull,
+        createdAt: new Date(),
       };
       newArray.push(mapDto);
     }
