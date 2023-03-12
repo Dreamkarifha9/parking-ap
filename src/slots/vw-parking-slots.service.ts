@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
+import { ECarSize } from 'src/shared/enums';
 import {
     calculatePaging,
     createOrderForBuilder,
@@ -75,12 +76,15 @@ export class VWParkingSlotsService {
         result.data = newData;
         return result;
     }
-    async findNearbyExit(): Promise<VWParkingSlotDto> {
+    async findNearbyExit(carSize: ECarSize): Promise<VWParkingSlotDto> {
         const row = await this.vWParkingSlotsRepository
             .createQueryBuilder('vw_parking_slots')
             .select()
             .where('vw_parking_slots.slotIsAvailable = :slotIsAvailable', {
                 slotIsAvailable: false,
+            })
+            .andWhere('vw_parking_slots.blockSize = :blockSize', {
+                blockSize: carSize,
             })
             .orderBy('"vw_parking_slots"."blockSize"', 'ASC')
             .addOrderBy('"vw_parking_slots"."floorNumber"', 'ASC')

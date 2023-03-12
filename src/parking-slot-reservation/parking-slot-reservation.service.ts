@@ -21,7 +21,9 @@ export class ParkingSlotReservationService {
   async checkIn(
     createParkingSlotReservationDto: CreateParkingSlotReservationDto,
   ) {
-    const findNearbyExit = await this.vWParkingSlotsService.findNearbyExit();
+    const findNearbyExit = await this.vWParkingSlotsService.findNearbyExit(
+      createParkingSlotReservationDto.carSize,
+    );
     if (findNearbyExit) {
       const { slotId } = findNearbyExit;
       const mapingDto = {
