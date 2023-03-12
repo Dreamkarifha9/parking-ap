@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS "parking"."parking_slot_reservations" (
     id uuid NOT NULL,
     "parkingSlotId" INT,
     "startTimestamp" timestamptz NOT NULL DEFAULT now(),
-    "actualExit" timestamptz NOT NULL DEFAULT now(),
+    "exitTimestamp" timestamptz NOT NULL DEFAULT now(),
     "durationInMinutes" INT,
     "bookingDate" timestamptz NOT NULL DEFAULT now(),
     "numberPlate" CHARACTER VARYING NULL,

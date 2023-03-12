@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './configs/database.config';
-import { CarParkLotModule } from './car-park-lot/car-park-lot.module';
 import { ParkingLotModule } from './parking-lot/parking-lot.module';
-import { ParkingLotModule } from './parking-lot/parking-lot.module';
+import { ParkingAppParkingLotsModule } from './parking-app/parking-app-parking-lots/parking-app-parking-lots.module';
 
 @Module({
   imports: [
@@ -15,8 +14,8 @@ import { ParkingLotModule } from './parking-lot/parking-lot.module';
       imports: [ConfigModule],
       useClass: DatabaseConfig,
     }),
-    CarParkLotModule,
     ParkingLotModule,
+    ParkingAppParkingLotsModule,
   ],
   controllers: [],
   providers: [],

@@ -13,7 +13,7 @@
 # table blocks
 
     id number PK
-    parkingLotId number FK
+    parkingLotId number FKs
     blockCode varchar ชื่อช่อง A1,A2,B1,B2,C1,C2
     blockSize enum smaill,medium,large
     isBlockFull สถานะว่างหรือไม่ของ block

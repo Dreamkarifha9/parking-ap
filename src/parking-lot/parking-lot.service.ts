@@ -1,11 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateParkingLotDto } from './dto/create-parking-lot.dto';
 import { UpdateParkingLotDto } from './dto/update-parking-lot.dto';
+import { ParkingLot } from './entities/parking-lot.entity';
 
 @Injectable()
 export class ParkingLotService {
-  create(createParkingLotDto: CreateParkingLotDto) {
-    return 'This action adds a new parkingLot';
+  private readonly logger: Logger = new Logger(ParkingLotService.name);
+  constructor(
+    @InjectRepository(ParkingLot)
+    private readonly parkingLotRepository: Repository<ParkingLot>,
+  ) { }
+  async create(createParkingLotDto: CreateParkingLotDto) {
+    const parkingLot: ParkingLot = {
+      id: null,
+      ...createParkingLotDto,
+      createdAt: new Date(),
+      createdBy: 'system'
+    };
+    const nweParkingLot = this.parkingLotRepository.create(parkingLot);
+    await this.parkingLotRepository.save(nweParkingLot);
+    return nweParkingLot;
   }
 
   findAll() {

@@ -11,7 +11,7 @@ async function bootstrap() {
   const configService: ConfigService = app.get(ConfigService);
   const env = configService.get('NODE_ENV', 'development');
   const version = 'v1.0';
-  const globalPrefix = `/api/park-system-service/${version}`;
+  const globalPrefix = `/api/${version}`;
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(
     new ValidationPipe({
@@ -31,7 +31,7 @@ async function bootstrap() {
       .build();
 
     const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('/docs/parking-system', app, document);
+    SwaggerModule.setup('/api/docs/', app, document);
   }
 
   app.enableCors({
@@ -43,6 +43,6 @@ async function bootstrap() {
   await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
   console.log(`with ${env} environment`);
-  console.log(`docs ${await app.getUrl()}/docs/parking-system`);
+  console.log(`docs ${await app.getUrl()}/api/docs`);
 }
 bootstrap();
