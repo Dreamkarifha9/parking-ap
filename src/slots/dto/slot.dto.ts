@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNumber } from 'class-validator';
+import { IsBoolean, IsNumber, Min } from 'class-validator';
 import { BaseDataDto } from '../../shared/dtos';
 
 export class SlotDto extends BaseDataDto {
@@ -10,6 +10,7 @@ export class SlotDto extends BaseDataDto {
     id: number;
 
     @ApiProperty()
+    @Min(1)
     @IsNumber()
     @Type(() => Number)
     floorId: number;

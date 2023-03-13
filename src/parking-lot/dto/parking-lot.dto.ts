@@ -9,7 +9,7 @@ export class ParkingLotDto extends BaseDataDto {
     @Type(() => Number)
     id: number;
 
-    @ApiProperty()
+    @ApiProperty({ default: null })
     @IsString()
     @IsNotEmpty()
     @Type(() => String)
