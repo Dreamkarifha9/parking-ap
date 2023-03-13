@@ -7,7 +7,7 @@ import {
   createOrQueriesForBuilder,
   getCommonQueryForBuilder,
 } from 'src/shared/helpers';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateFloorDto } from './dto/create-floor.dto';
 import { FloorDto } from './dto/floor.dto';
 import { FloorsDto } from './dto/floors.dto';
@@ -87,7 +87,8 @@ export class FloorsService {
   }
 
   async findAll(search: SearchFloor): Promise<FloorsDto> {
-    const { page, size, query, active, deleted, sortBy, orderBy } = search;
+    const { page, size, query, active, deleted, sortBy, orderBy, blockIds } =
+      search;
 
     const { commonQueries, commonParams } = getCommonQueryForBuilder(
       'floors',
@@ -125,6 +126,12 @@ export class FloorsService {
 
     if (querySql) {
       builder.andWhere(querySql, params);
+    }
+
+    if (blockIds) {
+      builder.andWhere('floors.blockId IN (:...blockIds)', {
+        blockIds: blockIds,
+      });
     }
 
     const [data, count] = await builder
