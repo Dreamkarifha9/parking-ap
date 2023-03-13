@@ -58,6 +58,15 @@ export class ParkingAppParkingLotsController {
     return this.parkingAppParkingLotsService.findAll(query);
   }
 
+  @Get('summary')
+  @ApiOkResponse({
+    description: 'A successful response.',
+    type: VWParkingSlotsDto,
+  })
+  findSummary() {
+    return this.parkingAppParkingLotsService.findSummary();
+  }
+
   @Get('details')
   @ApiOkResponse({
     description: 'A successful response.',
