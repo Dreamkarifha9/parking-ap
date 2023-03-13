@@ -31,9 +31,8 @@ export class ParkingLotService {
     };
     await this.checkDuplicateParkingLot(parkingLot.name);
     const nweParkingLot = this.parkingLotRepository.create(parkingLot);
-    this.logger.debug(`nweParkingLot ${JSON.stringify(nweParkingLot.id)}`);
+
     const result = await this.parkingLotRepository.save(nweParkingLot);
-    this.logger.debug(`result ${JSON.stringify(result)}`);
 
     return plainToInstance(ParkingLotDto, result);
   }
@@ -44,7 +43,7 @@ export class ParkingLotService {
       active: true,
       deleted: false,
     });
-    this.logger.debug(`foundParkingLot ${JSON.stringify(foundParkingLot)}`);
+
     if (foundParkingLot)
       throw new HttpException(
         `parkingLot name has been used.`,

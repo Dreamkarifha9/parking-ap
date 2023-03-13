@@ -14,10 +14,6 @@ export class SlotsService {
     private readonly slotsRepository: Repository<Slot>,
   ) { }
   async create(createSlotDto: CreateSlotDto[]) {
-    this.logger.debug(
-      `createSlotDto ${JSON.stringify(createSlotDto[0].numberOfSlot)}`,
-    );
-
     const { newArray } = await this.genrateSlot(createSlotDto);
 
     const newSlot = this.slotsRepository.create(newArray);
@@ -32,14 +28,14 @@ export class SlotsService {
     for (let i = 0; i < slots.length; i++) {
       let maxSlotNumber = 0;
       const lastSlotNumber = await this.getLastSeq(slots[i].floorId);
-      this.logger.debug(`lastSlotNumber ${lastSlotNumber}`);
+
       const numberOfSlot = slots[i].numberOfSlot - lastSlotNumber;
       // createOrUpdate
       if (lastSlotNumber != 0) {
         for (let s = 0; s < numberOfSlot; s++) {
           maxSlotNumber = lastSlotNumber + 1;
           const createdAt = addMilliseconds(new Date(), s);
-          this.logger.debug(`maxSlotNumber ${JSON.stringify(maxSlotNumber)}`);
+
           const mapDto = {
             ...slots[i],
             slotNumber: maxSlotNumber,
@@ -51,7 +47,7 @@ export class SlotsService {
         for (let s = 0; s < numberOfSlot; s++) {
           maxSlotNumber = maxSlotNumber + 1;
           const createdAt = addMilliseconds(new Date(), s);
-          this.logger.debug(`maxSlotNumber ${JSON.stringify(maxSlotNumber)}`);
+
           const mapDto = {
             ...slots[i],
             slotNumber: maxSlotNumber,
@@ -71,7 +67,7 @@ export class SlotsService {
       order: { createdAt: 'DESC' },
     });
     if (!result) return 0;
-    this.logger.debug('slotNumber', JSON.stringify(result.slotNumber));
+
     const lastNumber: number = +result.slotNumber;
     return lastNumber;
   }
@@ -86,7 +82,7 @@ export class SlotsService {
   async update(slot: Slot, dto: Partial<Slot>) {
     // Reason => https://github.com/typeorm/typeorm/issues/5131#issuecomment-1030895756
     const updateSlot = Object.assign(slot, dto);
-    this.logger.debug(`updateSlot ${JSON.stringify(updateSlot)}`);
+
     return this.slotsRepository.save(updateSlot, { reload: true });
   }
 

@@ -57,11 +57,7 @@ export class ParkingSlotReservationService {
       };
       const newParkingSlotReservation =
         this.parkingSlotReservationRepository.create(mapingDto);
-      this.logger.debug(
-        `newParkingSlotReservation ${JSON.stringify(
-          newParkingSlotReservation,
-        )}`,
-      );
+
       await this.parkingSlotReservationRepository.save(
         newParkingSlotReservation,
       );
@@ -71,7 +67,7 @@ export class ParkingSlotReservationService {
         isAvailable: true,
         updatedAt: new Date(),
       });
-      this.logger.debug(`findNearbyExit ${JSON.stringify(findNearbyExit)}`);
+
       return { suscuess: true };
     } else {
       throw new HttpException(`slot has been used up`, HttpStatus.NOT_FOUND);
@@ -230,11 +226,7 @@ export class ParkingSlotReservationService {
       parkingSlotReservation,
       dto,
     );
-    this.logger.debug(
-      `updateParkingSlotReservation ${JSON.stringify(
-        updateParkingSlotReservation,
-      )}`,
-    );
+
     return this.parkingSlotReservationRepository.save(
       updateParkingSlotReservation,
       { reload: true },

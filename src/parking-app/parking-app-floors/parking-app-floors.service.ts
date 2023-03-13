@@ -14,9 +14,6 @@ export class ParkingAppFloorsService {
     private readonly vWFloorService: VWFloorService,
   ) { }
   create(createParkingAppFloorDto: CreateParkingAppFloorDto) {
-    this.logger.debug(
-      `createParkingAppFloorDto ${JSON.stringify(createParkingAppFloorDto)}`,
-    );
     return this.floorsService.create(createParkingAppFloorDto.floors);
   }
 

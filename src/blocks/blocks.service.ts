@@ -23,7 +23,6 @@ export class BlocksService {
     private readonly blocksRepository: Repository<Block>,
   ) { }
   async create(createBlockDto: CreateBlockDto[]) {
-    this.logger.debug(`createBlockDto ${createBlockDto[0].blockSize}`);
     const isBlockCode = this.hasDuplicates(createBlockDto, 'blockCode');
     if (isBlockCode)
       throw new HttpException(
@@ -43,7 +42,6 @@ export class BlocksService {
       newArray.push(mapDto);
     }
     const newBlocks = this.blocksRepository.create(newArray);
-    this.logger.debug(`newBlocks ${JSON.stringify(newBlocks)}`);
     const result = await this.blocksRepository.save(newBlocks);
 
     return plainToInstance(CreateBlockDto, result);
@@ -55,7 +53,6 @@ export class BlocksService {
       active: true,
       deleted: false,
     });
-    this.logger.debug(`foundBlock ${JSON.stringify(foundBlock)}`);
     if (foundBlock)
       throw new HttpException(
         `block code  has been used.`,

@@ -16,9 +16,6 @@ export class ParkingAppBlocksService {
     private readonly vWParkingBlocks: VWParkingBlocks,
   ) { }
   create(createParkingAppBlockDto: CreateParkingAppBlockDto) {
-    this.logger.debug(
-      `createParkingAppBlockDto ${JSON.stringify(createParkingAppBlockDto)}`,
-    );
     return this.blocksService.create(createParkingAppBlockDto.blocks);
   }
   findSummary(query: SearchVWParkingBlockDto) {

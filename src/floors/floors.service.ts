@@ -50,7 +50,6 @@ export class FloorsService {
       newArray.push(mapDto);
     }
     const newFloors = this.floorsRepository.create(newArray);
-    this.logger.debug(`newFloors ${JSON.stringify(newFloors)}`);
     const result = await this.floorsRepository.save(newFloors);
 
     return plainToInstance(CreateFloorDto, result);
@@ -63,7 +62,6 @@ export class FloorsService {
       active: true,
       deleted: false,
     });
-    this.logger.debug(`foundFloor ${JSON.stringify(foundFloor)}`);
     if (foundFloor)
       throw new HttpException(
         `blockId ${blockId} and floorNumber ${floorNumber} has been used.`,

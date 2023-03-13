@@ -39,9 +39,7 @@ export class VWParkingSlotsService {
             blockSize,
             slotIsAvailable,
         } = search;
-        this.logger.debug(`active`, active);
-        this.logger.debug(`deleted`, deleted);
-        this.logger.debug(`slotIsAvailable`, slotIsAvailable);
+
         const { commonQueries, commonParams } = getCommonQueryForBuilder(
             'vw_parking_slots',
             deleted,

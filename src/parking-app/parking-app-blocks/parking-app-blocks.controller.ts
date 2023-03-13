@@ -37,11 +37,6 @@ export class ParkingAppBlocksController {
     type: ResponseBlockDto,
   })
   create(@Body() createParkingAppBlockDto: CreateParkingAppBlockDto) {
-    this.logger.debug(
-      `createParkingAppBlockDto ${JSON.stringify(
-        createParkingAppBlockDto.blocks,
-      )}`,
-    );
     return this.parkingAppBlocksService.create(createParkingAppBlockDto);
   }
 

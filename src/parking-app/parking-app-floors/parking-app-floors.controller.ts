@@ -39,11 +39,6 @@ export class ParkingAppFloorsController {
     type: ResponseFloorDto,
   })
   create(@Body() createParkingAppFloorDto: CreateParkingAppFloorDto) {
-    this.logger.debug(
-      `createParkingAppFloorDto ${JSON.stringify(
-        createParkingAppFloorDto.floors,
-      )}`,
-    );
     return this.parkingAppFloorsService.create(createParkingAppFloorDto);
   }
 
