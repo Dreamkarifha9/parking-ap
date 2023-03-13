@@ -23,9 +23,4 @@ export class FloorDto extends BaseDataDto {
     @IsNumber()
     @Type(() => Number)
     numberOfSlot: number;
-
-    @ApiProperty({ default: false })
-    @IsBoolean()
-    @Type(() => Boolean)
-    isFloorFull: boolean;
 }

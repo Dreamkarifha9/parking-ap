@@ -38,7 +38,6 @@ export class BlocksService {
         parkingLotId: createBlockDto[i].parkingLotId,
         blockCode: createBlockDto[i].blockCode,
         blockSize: createBlockDto[i].blockSize,
-        isBlockFull: createBlockDto[i].isBlockFull,
         createdAt: new Date(),
       };
       newArray.push(mapDto);

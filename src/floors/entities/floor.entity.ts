@@ -14,7 +14,4 @@ export class Floor extends BasicData {
 
     @Column({ type: 'int' })
     numberOfSlot: number;
-
-    @Column({ type: 'boolean', default: false })
-    isFloorFull: boolean;
 }

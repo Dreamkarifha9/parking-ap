@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS "parking"."floors" (
     "blockId" INT,
     "floorNumber" INT,
     "numberOfSlot" INT,
-    "isFloorFull" BOOLEAN DEFAULT false,
     "active" BOOLEAN DEFAULT true,
     "deleted" BOOLEAN DEFAULT false,
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,

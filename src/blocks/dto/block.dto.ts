@@ -26,9 +26,4 @@ export class BlockDto extends BaseDataDto {
     })
     @IsEnum(ECarSize, { each: true })
     blockSize: ECarSize;
-
-    @ApiProperty({ default: false })
-    @IsBoolean()
-    @Type(() => Boolean)
-    isBlockFull: boolean;
 }

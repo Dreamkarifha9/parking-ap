@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS "parking"."blocks" (
     "parkingLotId" INT,
     "blockCode" CHARACTER VARYING NULL,
     "blockSize" public."eCarSize" NOT null,
-    "isBlockFull" BOOLEAN DEFAULT false,
     "active" BOOLEAN DEFAULT true,
     "deleted" BOOLEAN DEFAULT false,
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,

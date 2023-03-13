@@ -3,9 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   HttpCode,
   Logger,
   Query,
@@ -22,6 +19,7 @@ import { ResponseBlockDto } from './dto/response-parking-lot.dto';
 import { SearchVWParkingBlockDto } from 'src/blocks/dto/search-vw-parking-block.dto';
 import { VWParkingBlocksDto } from 'src/blocks/dto/vw-parking-blocks.dto';
 import { SearchBlockDto } from 'src/blocks/dto/search-block.dto';
+import { BlocksDto } from 'src/blocks/dto/blocks.dto';
 
 @ApiTags('App::ParkingApp::Blocks')
 @Controller('parking-app-blocks')
@@ -50,7 +48,7 @@ export class ParkingAppBlocksController {
   @Get()
   @ApiOkResponse({
     description: 'A successful response.',
-    type: VWParkingBlocksDto,
+    type: BlocksDto,
   })
   findAll(
     @Query()

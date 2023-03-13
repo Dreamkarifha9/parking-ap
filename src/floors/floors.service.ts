@@ -1,8 +1,17 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
+import {
+  calculatePaging,
+  createOrderForBuilder,
+  createOrQueriesForBuilder,
+  getCommonQueryForBuilder,
+} from 'src/shared/helpers';
 import { Repository } from 'typeorm';
 import { CreateFloorDto } from './dto/create-floor.dto';
+import { FloorDto } from './dto/floor.dto';
+import { FloorsDto } from './dto/floors.dto';
+import { SearchFloor } from './dto/search-block.dto';
 
 import { UpdateFloorDto } from './dto/update-floor.dto';
 import { Floor } from './entities/floor.entity';
@@ -36,7 +45,6 @@ export class FloorsService {
         blockId: createFloorDto[i].blockId,
         floorNumber: createFloorDto[i].floorNumber,
         numberOfSlot: createFloorDto[i].numberOfSlot,
-        isFloorFull: createFloorDto[i].isFloorFull,
         createdAt: new Date(),
       };
       newArray.push(mapDto);
@@ -78,8 +86,64 @@ export class FloorsService {
     return false; // no duplicates found
   }
 
-  findAll() {
-    return `This action returns all floors`;
+  async findAll(search: SearchFloor): Promise<FloorsDto> {
+    const { page, size, query, active, deleted, sortBy, orderBy } = search;
+
+    const { commonQueries, commonParams } = getCommonQueryForBuilder(
+      'floors',
+      deleted,
+      active,
+    );
+
+    const { querySql, params } = createOrQueriesForBuilder(query, [
+      'floors."id"',
+    ]);
+
+    const _order = createOrderForBuilder(
+      'floors',
+      sortBy || '"id"',
+      orderBy || 'ASC',
+    );
+
+    const { skip, limit } = calculatePaging(page, size);
+    // NOTED: Refered to this stackoverfow [https://stackoverflow.com/a/57648345]
+    const builder = this.floorsRepository.createQueryBuilder('floors');
+    builder.select([
+      'floors.id',
+      'floors.blockId',
+      'floors.floorNumber',
+      'floors.numberOfSlot',
+      'floors.active',
+      'floors.deleted',
+      'floors.createdAt',
+      'floors.createdBy',
+      'floors.updatedAt',
+      'floors.updatedBy',
+    ]);
+
+    builder.where(commonQueries, commonParams);
+
+    if (querySql) {
+      builder.andWhere(querySql, params);
+    }
+
+    const [data, count] = await builder
+      .orderBy({ ..._order })
+      .skip(skip)
+      .take(limit)
+      .getManyAndCount();
+
+    const newData = plainToInstance(FloorDto, data);
+
+    const result = new FloorsDto();
+    result.currentPage = page;
+    result.total = count;
+    result.perPage = size;
+    result.success = true;
+    result.error = [];
+    result.totalPage = Math.ceil(count / size);
+    result.data = newData;
+    return result;
   }
 
   findOne(id: number) {

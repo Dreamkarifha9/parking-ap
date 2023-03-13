@@ -14,7 +14,4 @@ export class Block extends BasicData {
 
     @Column({ type: 'varchar' })
     blockSize: string;
-
-    @Column({ type: 'boolean', default: false })
-    isBlockFull: boolean;
 }
