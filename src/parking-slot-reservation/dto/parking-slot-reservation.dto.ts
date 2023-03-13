@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
-import { BaseDataDto } from 'src/shared/dtos';
-import { ECarSize } from 'src/shared/enums';
+import { BaseDataDto } from '../../shared/dtos';
+import { ECarSize } from '../../shared/enums';
 
 export class ParkingSlotReservationDto extends BaseDataDto {
     @ApiProperty()

@@ -1,4 +1,4 @@
-import { BasicViewData } from 'src/shared/entities';
+import { BasicViewData } from '../../shared/entities';
 import { ViewEntity, ViewColumn } from 'typeorm';
 
 @ViewEntity({ name: 'vw_parking_slots', schema: 'parking', synchronize: false })

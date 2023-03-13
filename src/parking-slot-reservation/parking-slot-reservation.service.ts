@@ -1,18 +1,18 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { VWParkingSlotsService } from 'src/slots/vw-parking-slots.service';
+import { VWParkingSlotsService } from '../slots/vw-parking-slots.service';
 import { Repository } from 'typeorm';
 import { CreateParkingSlotReservationDto } from './dto/create-parking-slot-reservation.dto';
 import { ParkingSlotReservation } from './entities/parking-slot-reservation.entity';
 import { v4 as uuid } from 'uuid';
-import { SlotsService } from 'src/slots/slots.service';
+import { SlotsService } from '../slots/slots.service';
 import { ParkingSlotReservationDto } from './dto/parking-slot-reservation.dto';
 import {
   calculatePaging,
   createOrderForBuilder,
   createOrQueriesForBuilder,
   getCommonQueryForBuilder,
-} from 'src/shared/helpers';
+} from './../shared/helpers';
 import { plainToInstance } from 'class-transformer';
 import { ParkingSlotReservationsDto } from './dto/parking-slot-reservations.dto';
 import { SearchParkingSlotReservationDto } from './dto/search-parking-slot-reservation.dto';

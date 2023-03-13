@@ -1,4 +1,4 @@
-import { BasicData } from 'src/shared/entities';
+import { BasicData } from '../../shared/entities';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('slots', { schema: 'parking' })

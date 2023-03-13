@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsNumber, IsString } from 'class-validator';
-import { BaseDataDto } from 'src/shared/dtos';
+import { BaseDataDto } from '../../shared/dtos';
 
 export class VWParkingSlotDto extends BaseDataDto {
     @ApiProperty()

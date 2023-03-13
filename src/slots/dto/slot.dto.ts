@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsNumber } from 'class-validator';
-import { BaseDataDto } from 'src/shared/dtos';
+import { BaseDataDto } from '../../shared/dtos';
 
 export class SlotDto extends BaseDataDto {
     @ApiProperty({ default: null })

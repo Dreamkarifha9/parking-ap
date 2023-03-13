@@ -7,7 +7,7 @@ import {
     createOrderForBuilder,
     createOrQueriesForBuilder,
     getCommonQueryForBuilder,
-} from 'src/shared/helpers';
+} from './../shared/helpers';
 
 import { Repository } from 'typeorm';
 import { SearchVWParkingSlotDto } from './dto/search-vw-parking-slot.dto';
