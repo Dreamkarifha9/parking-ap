@@ -34,7 +34,14 @@
 
 ```เมื่อสร้างที่จอดเสร็จ เริ่ม check-in ได้เลย
  create parking-lot
- POST : >> api/v1.0/parking-app-parking-lots
+ POST : >> api/v1.0/customer-app-reservations/check-in
+```
+
+## Step 6
+
+```เมื่อจะออกจากลานจอดรถ เริ่ม check-out ได้เลย
+ create parking-lot
+ POST : >> api/v1.0/customer-app-reservations/check-out
 ```
 
 ## Docker build
