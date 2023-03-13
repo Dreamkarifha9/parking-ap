@@ -11,45 +11,54 @@ import { addMilliseconds } from 'date-fns';
 import { Repository } from 'typeorm';
 import { CreateParkingSlotReservationDto } from './dto/create-parking-slot-reservation.dto';
 import { ECarSize } from '../shared/enums';
-
+const parkingSlotReservationEntityList: Partial<ParkingSlotReservation>[] = [
+  {
+    slotId: 1,
+    startTimestamp: addMilliseconds(new Date(), 1),
+    exitTimestamp: addMilliseconds(new Date(), 1),
+    durationInMinutes: 10,
+    bookingDate: addMilliseconds(new Date(), 1),
+    numberPlate: 'กท.1111',
+    carSize: ECarSize.SMAILL,
+  },
+  {
+    slotId: 1,
+    startTimestamp: addMilliseconds(new Date(), 2),
+    exitTimestamp: addMilliseconds(new Date(), 2),
+    durationInMinutes: 10,
+    bookingDate: addMilliseconds(new Date(), 2),
+    numberPlate: 'กท.2222',
+    carSize: ECarSize.SMAILL,
+  },
+  {
+    slotId: 1,
+    startTimestamp: addMilliseconds(new Date(), 3),
+    exitTimestamp: addMilliseconds(new Date(), 3),
+    durationInMinutes: 10,
+    bookingDate: addMilliseconds(new Date(), 3),
+    numberPlate: 'กท.3333',
+    carSize: ECarSize.SMAILL,
+  },
+];
+class ApiServiceMock {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  findAll() {
+    return parkingSlotReservationEntityList;
+  }
+}
 describe('ParkingSlotReservationService', () => {
   let parkingSlotReservationService: ParkingSlotReservationService;
   let parkingSlotReservationRepository: Repository<ParkingSlotReservation>;
-  const parkingSlotReservationEntityList: Partial<ParkingSlotReservation>[] = [
-    {
-      slotId: 1,
-      startTimestamp: addMilliseconds(new Date(), 1),
-      exitTimestamp: addMilliseconds(new Date(), 1),
-      durationInMinutes: 10,
-      bookingDate: addMilliseconds(new Date(), 1),
-      numberPlate: 'กท.1111',
-      carSize: ECarSize.SMAILL,
-    },
-    {
-      slotId: 1,
-      startTimestamp: addMilliseconds(new Date(), 2),
-      exitTimestamp: addMilliseconds(new Date(), 2),
-      durationInMinutes: 10,
-      bookingDate: addMilliseconds(new Date(), 2),
-      numberPlate: 'กท.2222',
-      carSize: ECarSize.SMAILL,
-    },
-    {
-      slotId: 1,
-      startTimestamp: addMilliseconds(new Date(), 3),
-      exitTimestamp: addMilliseconds(new Date(), 3),
-      durationInMinutes: 10,
-      bookingDate: addMilliseconds(new Date(), 3),
-      numberPlate: 'กท.3333',
-      carSize: ECarSize.SMAILL,
-    },
-  ];
 
   const mockCreateParkingSlotReservation = {
     suscuess: true,
   };
 
   beforeEach(async () => {
+    const ApiServiceProvider = {
+      provide: ParkingSlotReservationService,
+      useClass: ApiServiceMock,
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ParkingSlotReservationService,
@@ -78,6 +87,7 @@ describe('ParkingSlotReservationService', () => {
           provide: getRepositoryToken(Slot),
           useValue: {},
         },
+        ApiServiceProvider,
       ],
     }).compile();
 
@@ -93,15 +103,15 @@ describe('ParkingSlotReservationService', () => {
     expect(parkingSlotReservationService).toBeDefined();
   });
 
-  describe('check-in', () => {
+  describe('findAll', () => {
     it('check in successfully', async () => {
-      const data: CreateParkingSlotReservationDto = {
-        numberPlate: 'กท.1111',
-        carSize: ECarSize.SMAILL,
+      const data = {
+        deleted: false,
+        size: 20,
       };
-      const reuslt = await parkingSlotReservationService.checkIn(data);
+      const reuslt = await parkingSlotReservationService.findAll(data);
 
-      expect(reuslt).toEqual({ suscuess: true });
+      expect(reuslt).toEqual(parkingSlotReservationEntityList);
     });
   });
 });
