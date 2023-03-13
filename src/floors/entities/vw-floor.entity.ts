@@ -1,11 +1,14 @@
 import { ViewEntity, ViewColumn } from 'typeorm';
 
 @ViewEntity({
-    name: 'vw_parking_lots',
+    name: 'vw_parking_floors',
     schema: 'parking',
     synchronize: false,
 })
-export class VWParkingLot {
+export class VWFloor {
+    @ViewColumn()
+    floorNumber?: number;
+
     @ViewColumn()
     parkingLotId?: number;
 
@@ -13,11 +16,11 @@ export class VWParkingLot {
     parkingName?: string;
 
     @ViewColumn()
-    totalParkingSlot?: number;
+    totalFloorFull?: number;
 
     @ViewColumn()
     totalUsedParkingSlot?: number;
 
     @ViewColumn()
-    isParkingFull?: boolean;
+    isFloorFull?: boolean;
 }

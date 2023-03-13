@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { FloorsService } from 'src/floors/floors.service';
+import { VWFloorService } from 'src/floors/vw-floors.service';
 import { CreateParkingAppFloorDto } from './dto/create-parking-app-floor.dto';
 
 import { UpdateParkingAppFloorDto } from './dto/update-parking-app-floor.dto';
@@ -7,15 +8,18 @@ import { UpdateParkingAppFloorDto } from './dto/update-parking-app-floor.dto';
 @Injectable()
 export class ParkingAppFloorsService {
   private readonly logger: Logger = new Logger(ParkingAppFloorsService.name);
-  constructor(private readonly floorsService: FloorsService) { }
+  constructor(
+    private readonly floorsService: FloorsService,
+    private readonly vWFloorService: VWFloorService,
+  ) { }
   create(createParkingAppFloorDto: CreateParkingAppFloorDto) {
     this.logger.debug(
       `createParkingAppFloorDto ${JSON.stringify(createParkingAppFloorDto)}`,
     );
     return this.floorsService.create(createParkingAppFloorDto.floors);
   }
-  findAll() {
-    return `This action returns all parkingAppFloors`;
+  findSummary() {
+    return this.vWFloorService.findSummary();
   }
 
   findOne(id: number) {

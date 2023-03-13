@@ -39,10 +39,10 @@ export class ParkingAppFloorsController {
     return this.parkingAppFloorsService.create(createParkingAppFloorDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.parkingAppFloorsService.findAll();
-  // }
+  @Get('summary')
+  findSummary() {
+    return this.parkingAppFloorsService.findSummary();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

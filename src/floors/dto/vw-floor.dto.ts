@@ -3,7 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
-export class VWParkingLotDto {
+export class VWFloorDto {
+    @ApiProperty()
+    @IsNumber()
+    @Type(() => Number)
+    floorNumber?: number;
+
     @ApiProperty()
     @IsNumber()
     @Type(() => Number)
@@ -17,7 +22,7 @@ export class VWParkingLotDto {
     @ApiProperty()
     @IsNumber()
     @Type(() => Number)
-    totalParkingSlot?: number;
+    totalFloorFull?: number;
 
     @ApiProperty()
     @IsNumber()
@@ -27,5 +32,5 @@ export class VWParkingLotDto {
     @ApiProperty()
     @IsBoolean()
     @Type(() => Boolean)
-    isParkingFull?: boolean;
+    isFloorFull?: boolean;
 }

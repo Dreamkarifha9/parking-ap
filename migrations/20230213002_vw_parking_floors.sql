@@ -1,5 +1,5 @@
  CREATE OR REPLACE VIEW parking.vw_parking_floors
-AS SELECT  f."floorNumber",b."parkingLotId",count(*) as "totalFloorFull",
+AS SELECT  f."floorNumber",pl.name as "parkingName",b."parkingLotId",count(*) as "totalFloorFull",
 ( SELECT count(vps."parkingLotId") AS count
            FROM parking.vw_parking_slots vps where vps."slotIsAvailable" = true and vps."floorNumber" = f."floorNumber") AS "totalUsedParkingSlot",
              CASE
@@ -10,4 +10,5 @@ AS SELECT  f."floorNumber",b."parkingLotId",count(*) as "totalFloorFull",
            FROM parking.blocks b
            LEFT JOIN parking.floors f ON f."blockId" = b.id and f.active = true and f.deleted = false
            left join parking.slots s on s."floorId" = f.id and s.active = true and s.deleted = false
-          group  by  "parkingLotId", "floorNumber";
+           left join parking.parking_lot pl on pl.id = b."parkingLotId" and pl.active = true and pl.deleted = false
+           group  by  "parkingLotId", "floorNumber", "name";

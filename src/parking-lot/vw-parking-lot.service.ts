@@ -16,11 +16,11 @@ export class VWParkingLotService {
 
     async findSummary(): Promise<VWParkingLotDto[]> {
         const result = await this.vWParkingLotsRepository.find();
-        const userArray = result.map((plainObject) =>
+        const newArray = result.map((plainObject) =>
             plainToClass(VWParkingLotDto, plainObject),
         );
 
-        return userArray;
+        return newArray;
     }
 
     async findOneBySearch(q: Partial<VWParkingLotDto>) {
