@@ -12,7 +12,7 @@ import { CustomerAppSlotReservationsService } from './customer-app-slot-reservat
 import { CreateCustomerAppSlotReservationDto } from './dto/create-customer-app-slot-reservation.dto';
 import { UpdateCustomerAppSlotReservationDto } from './dto/update-customer-app-slot-reservation.dto';
 
-@ApiTags('App::CustomerApp::slot-reservations')
+@ApiTags('App::CustomerApp::SlotReservations')
 @Controller('customer-app-reservations')
 export class CustomerAppSlotReservationsController {
   constructor(

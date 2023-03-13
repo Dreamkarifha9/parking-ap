@@ -15,7 +15,7 @@ import { UpdateParkingAppFloorDto } from './dto/update-parking-app-floor.dto';
 import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseFloorDto } from './dto/response-parking-lot.dto';
 
-@ApiTags('App::ParkingApp::floors')
+@ApiTags('App::ParkingApp::Floors')
 @Controller('parking-app-floors')
 export class ParkingAppFloorsController {
   private readonly logger: Logger = new Logger(ParkingAppFloorsController.name);
