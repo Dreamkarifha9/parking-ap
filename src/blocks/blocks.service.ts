@@ -1,8 +1,17 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
+import {
+  calculatePaging,
+  createOrderForBuilder,
+  createOrQueriesForBuilder,
+  getCommonQueryForBuilder,
+} from 'src/shared/helpers';
 import { ILike, Repository } from 'typeorm';
+import { BlockDto } from './dto/block.dto';
+import { BlocksDto } from './dto/blocks.dto';
 import { CreateBlockDto } from './dto/create-block.dto';
+import { SearchBlockDto } from './dto/search-block.dto';
 import { UpdateBlockDto } from './dto/update-block.dto';
 import { Block } from './entities/block.entity';
 
@@ -67,10 +76,66 @@ export class BlocksService {
     return false; // no duplicates found
   }
 
-  findAll() {
-    return `This action returns all blocks`;
-  }
+  async findAll(search: SearchBlockDto): Promise<BlocksDto> {
+    const { page, size, query, active, deleted, sortBy, orderBy } = search;
 
+    const { commonQueries, commonParams } = getCommonQueryForBuilder(
+      'blocks',
+      deleted,
+      active,
+    );
+
+    const { querySql, params } = createOrQueriesForBuilder(query, [
+      'blocks."id"',
+    ]);
+
+    const _order = createOrderForBuilder(
+      'blocks',
+      sortBy || '"id"',
+      orderBy || 'ASC',
+    );
+
+    const { skip, limit } = calculatePaging(page, size);
+    // NOTED: Refered to this stackoverfow [https://stackoverflow.com/a/57648345]
+    const builder = this.blocksRepository.createQueryBuilder('blocks');
+    builder.select([
+      'blocks.id',
+      'blocks.parkingLotId',
+      'blocks.blockCode',
+      'blocks.blockSize',
+      'blocks.isBlockFull',
+      'blocks.active',
+      'blocks.deleted',
+      'blocks.createdAt',
+      'blocks.createdBy',
+      'blocks.updatedAt',
+      'blocks.updatedBy',
+    ]);
+
+    builder.where(commonQueries, commonParams);
+
+    if (querySql) {
+      builder.andWhere(querySql, params);
+    }
+
+    const [data, count] = await builder
+      .orderBy({ ..._order })
+      .skip(skip)
+      .take(limit)
+      .getManyAndCount();
+
+    const newData = plainToInstance(BlockDto, data);
+
+    const result = new BlocksDto();
+    result.currentPage = page;
+    result.total = count;
+    result.perPage = size;
+    result.success = true;
+    result.error = [];
+    result.totalPage = Math.ceil(count / size);
+    result.data = newData;
+    return result;
+  }
   findOne(id: number) {
     return `This action returns a #${id} block`;
   }

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { BlocksService } from 'src/blocks/blocks.service';
-import { SearchVWParkingBlockDto } from 'src/blocks/dto/search-vw-parking-slot.dto';
+import { SearchBlockDto } from 'src/blocks/dto/search-block.dto';
+import { SearchVWParkingBlockDto } from 'src/blocks/dto/search-vw-parking-block.dto';
 import { VWParkingBlocks } from 'src/blocks/vw-parking-block.service';
 
 import { CreateParkingAppBlockDto } from './dto/create-parking-app-block.dto';
@@ -21,12 +22,11 @@ export class ParkingAppBlocksService {
     return this.blocksService.create(createParkingAppBlockDto.blocks);
   }
   findSummary(query: SearchVWParkingBlockDto) {
-    return this.vWParkingBlocks.findAll(query)
+    return this.vWParkingBlocks.findAll(query);
   }
 
-
-  findAll() {
-    return `This action returns all parkingAppBlocks`;
+  findAll(query: SearchBlockDto) {
+    return this.blocksService.findAll(query);
   }
 
   findOne(id: number) {

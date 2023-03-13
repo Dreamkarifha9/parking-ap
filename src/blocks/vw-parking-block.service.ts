@@ -9,7 +9,7 @@ import {
 } from 'src/shared/helpers';
 
 import { Repository } from 'typeorm';
-import { SearchVWParkingBlockDto } from './dto/search-vw-parking-slot.dto';
+import { SearchVWParkingBlockDto } from './dto/search-vw-parking-block.dto';
 import { VWParkingBlockDto } from './dto/vw-parking-block.dto';
 import { VWParkingBlocksDto } from './dto/vw-parking-blocks.dto';
 
