@@ -76,7 +76,16 @@ export class BlocksService {
   }
 
   async findAll(search: SearchBlockDto): Promise<BlocksDto> {
-    const { page, size, query, active, deleted, sortBy, orderBy } = search;
+    const {
+      page,
+      size,
+      query,
+      active,
+      deleted,
+      sortBy,
+      orderBy,
+      parkingLotId,
+    } = search;
 
     const { commonQueries, commonParams } = getCommonQueryForBuilder(
       'blocks',
@@ -102,7 +111,6 @@ export class BlocksService {
       'blocks.parkingLotId',
       'blocks.blockCode',
       'blocks.blockSize',
-      'blocks.isBlockFull',
       'blocks.active',
       'blocks.deleted',
       'blocks.createdAt',
@@ -115,6 +123,12 @@ export class BlocksService {
 
     if (querySql) {
       builder.andWhere(querySql, params);
+    }
+
+    if (parkingLotId) {
+      builder.andWhere('blocks.parkingLotId = :parkingLotId', {
+        parkingLotId,
+      });
     }
 
     const [data, count] = await builder
