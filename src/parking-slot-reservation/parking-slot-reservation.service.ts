@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VWParkingSlotsService } from 'src/slots/vw-parking-slots.service';
 import { Repository } from 'typeorm';
 import { CreateParkingSlotReservationDto } from './dto/create-parking-slot-reservation.dto';
-import { UpdateParkingSlotReservationDto } from './dto/update-parking-slot-reservation.dto';
 import { ParkingSlotReservation } from './entities/parking-slot-reservation.entity';
 import { v4 as uuid } from 'uuid';
 import { SlotsService } from 'src/slots/slots.service';
@@ -17,6 +16,7 @@ import {
 import { plainToInstance } from 'class-transformer';
 import { ParkingSlotReservationsDto } from './dto/parking-slot-reservations.dto';
 import { SearchParkingSlotReservationDto } from './dto/search-parking-slot-reservation.dto';
+import { differenceInMinutes } from 'date-fns';
 @Injectable()
 export class ParkingSlotReservationService {
   private readonly logger: Logger = new Logger(
@@ -31,13 +31,13 @@ export class ParkingSlotReservationService {
   async checkIn(
     createParkingSlotReservationDto: CreateParkingSlotReservationDto,
   ) {
-    const plateNumber = await this.vWParkingSlotsService.findOneBySearch({
+    const foundNumberPlate = await this.vWParkingSlotsService.findOneBySearch({
       numberPlate: createParkingSlotReservationDto.numberPlate,
       active: true,
       deleted: false,
       slotIsAvailable: true,
     });
-    if (plateNumber) {
+    if (foundNumberPlate) {
       throw new HttpException(
         `number Plate Has Already isUsed.`,
         HttpStatus.BAD_REQUEST,
@@ -75,6 +75,31 @@ export class ParkingSlotReservationService {
     }
   }
 
+  async checkOut(numberPlate: string) {
+    const foundNumberPlate = await this.vWParkingSlotsService.findOneBySearch({
+      numberPlate,
+      active: true,
+      deleted: false,
+      slotIsAvailable: true,
+    });
+    if (!foundNumberPlate) {
+      throw new HttpException(`numberPlate not found`, HttpStatus.BAD_REQUEST);
+    }
+    const { slotId } = foundNumberPlate;
+    const reservation = await this.findOneByNumberPlate(numberPlate);
+    const { startTimestamp } = reservation;
+    const endDate = new Date();
+    const difInMinutes = differenceInMinutes(endDate, startTimestamp);
+    // update duration and exitTime
+    await this.update(reservation, {
+      exitTimestamp: new Date(),
+      durationInMinutes: difInMinutes,
+    });
+    // update status isAvailable in slot table
+    const findSlot = await this.slotsService.findOne(slotId);
+    await this.slotsService.update(findSlot, { isAvailable: false });
+    return { suscuess: true };
+  }
   async findOneBySearch(q: Partial<ParkingSlotReservationDto>) {
     return this.parkingSlotReservationRepository.findOneBy({ ...q });
   }
@@ -176,15 +201,37 @@ export class ParkingSlotReservationService {
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parkingSlotReservation`;
+  findOneByNumberPlate(numberPlate: string) {
+    return this.parkingSlotReservationRepository.findOne({
+      where: {
+        numberPlate,
+        active: true,
+        deleted: false,
+      },
+      order: {
+        bookingDate: 'DESC',
+      },
+    });
   }
 
-  update(
-    id: number,
-    updateParkingSlotReservationDto: UpdateParkingSlotReservationDto,
+  async update(
+    parkingSlotReservation: ParkingSlotReservation,
+    dto: Partial<ParkingSlotReservation>,
   ) {
-    return `This action updates a #${id} parkingSlotReservation`;
+    // Reason => https://github.com/typeorm/typeorm/issues/5131#issuecomment-1030895756
+    const updateParkingSlotReservation = Object.assign(
+      parkingSlotReservation,
+      dto,
+    );
+    this.logger.debug(
+      `updateParkingSlotReservation ${JSON.stringify(
+        updateParkingSlotReservation,
+      )}`,
+    );
+    return this.parkingSlotReservationRepository.save(
+      updateParkingSlotReservation,
+      { reload: true },
+    );
   }
 
   remove(id: number) {

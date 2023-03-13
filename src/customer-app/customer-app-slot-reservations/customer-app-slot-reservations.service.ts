@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ParkingSlotReservationService } from 'src/parking-slot-reservation/parking-slot-reservation.service';
-import { CreateCustomerAppSlotReservationDto } from './dto/create-customer-app-slot-reservation.dto';
-import { UpdateCustomerAppSlotReservationDto } from './dto/update-customer-app-slot-reservation.dto';
+import { CheckInDto } from './dto/check-in.dto';
+import { CheckOutDto } from './dto/check-out.dto';
 
 @Injectable()
 export class CustomerAppSlotReservationsService {
@@ -11,30 +11,13 @@ export class CustomerAppSlotReservationsService {
   constructor(
     private readonly parkingSlotReservationService: ParkingSlotReservationService,
   ) { }
-  async checkIn(
-    createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
-  ) {
-    return await this.parkingSlotReservationService.checkIn(
-      createCustomerAppSlotReservationDto,
+  async checkIn(checkInDto: CheckInDto) {
+    return await this.parkingSlotReservationService.checkIn(checkInDto);
+  }
+
+  async checkOut(checkOutDto: CheckOutDto) {
+    return await this.parkingSlotReservationService.checkOut(
+      checkOutDto.numberPlate,
     );
-  }
-
-  findAll() {
-    return `This action returns all customerAppSlotReservations`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} customerAppSlotReservation`;
-  }
-
-  update(
-    id: number,
-    updateCustomerAppSlotReservationDto: UpdateCustomerAppSlotReservationDto,
-  ) {
-    return `This action updates a #${id} customerAppSlotReservation`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customerAppSlotReservation`;
   }
 }

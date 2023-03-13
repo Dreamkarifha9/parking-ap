@@ -1,16 +1,8 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CustomerAppSlotReservationsService } from './customer-app-slot-reservations.service';
-import { CreateCustomerAppSlotReservationDto } from './dto/create-customer-app-slot-reservation.dto';
-import { UpdateCustomerAppSlotReservationDto } from './dto/update-customer-app-slot-reservation.dto';
+import { CheckInDto } from './dto/check-in.dto';
+import { CheckOutDto } from './dto/check-out.dto';
 
 @ApiTags('App::CustomerApp::SlotReservations')
 @Controller('customer-app-reservations')
@@ -22,20 +14,16 @@ export class CustomerAppSlotReservationsController {
   @Post('check-in')
   checkIn(
     @Body()
-    createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
+    checkInDto: CheckInDto,
   ) {
-    return this.customerAppSlotReservationsService.checkIn(
-      createCustomerAppSlotReservationDto,
-    );
+    return this.customerAppSlotReservationsService.checkIn(checkInDto);
   }
 
   @Post('check-out')
   checkOut(
     @Body()
-    createCustomerAppSlotReservationDto: CreateCustomerAppSlotReservationDto,
+    checkOutDto: CheckOutDto,
   ) {
-    return this.customerAppSlotReservationsService.checkIn(
-      createCustomerAppSlotReservationDto,
-    );
+    return this.customerAppSlotReservationsService.checkOut(checkOutDto);
   }
 }
