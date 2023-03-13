@@ -42,7 +42,7 @@ export class ParkingAppParkingLotsController {
     );
   }
 
-  @Get()
+  @Get('details')
   @ApiOkResponse({
     description: 'A successful response.',
     type: VWParkingSlotsDto,

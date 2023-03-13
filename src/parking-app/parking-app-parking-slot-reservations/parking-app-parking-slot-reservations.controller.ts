@@ -24,9 +24,4 @@ export class ParkingAppParkingSlotReservationsController {
     query.size = query.size || 20;
     return this.parkingAppParkingSlotReservationsService.findAll(query);
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingAppParkingSlotReservationsService.findOne(+id);
-  }
 }

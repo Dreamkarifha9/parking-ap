@@ -8,12 +8,20 @@ import {
   Delete,
   HttpCode,
   Logger,
+  Query,
 } from '@nestjs/common';
 import { ParkingAppBlocksService } from './parking-app-blocks.service';
 import { CreateParkingAppBlockDto } from './dto/create-parking-app-block.dto';
 import { UpdateParkingAppBlockDto } from './dto/update-parking-app-block.dto';
-import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ResponseBlockDto } from './dto/response-parking-lot.dto';
+import { SearchVWParkingBlockDto } from 'src/blocks/dto/search-vw-parking-slot.dto';
+import { VWParkingBlocksDto } from 'src/blocks/dto/vw-parking-blocks.dto';
 
 @ApiTags('App::ParkingApp::Blocks')
 @Controller('parking-app-blocks')
@@ -38,10 +46,19 @@ export class ParkingAppBlocksController {
     );
     return this.parkingAppBlocksService.create(createParkingAppBlockDto);
   }
-  // @Get()
-  // findAll() {
-  //   return this.parkingAppBlocksService.findAll();
-  // }
+  @Get('summary')
+  @ApiOkResponse({
+    description: 'A successful response.',
+    type: VWParkingBlocksDto,
+  })
+  findAll(
+    @Query()
+    query: SearchVWParkingBlockDto,
+  ) {
+    query.deleted = query.deleted || false;
+    query.size = query.size || 20;
+    return this.parkingAppBlocksService.findSummary(query);
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
