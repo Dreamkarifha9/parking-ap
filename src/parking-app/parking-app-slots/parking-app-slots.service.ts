@@ -16,7 +16,7 @@ export class ParkingAppSlotsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} parkingAppSlot`;
+    return this.slotsService.findOne(id);
   }
 
   update(id: number, updateParkingAppSlotDto: UpdateParkingAppSlotDto) {

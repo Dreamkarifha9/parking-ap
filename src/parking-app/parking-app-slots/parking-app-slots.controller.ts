@@ -39,10 +39,10 @@ export class ParkingAppSlotsController {
   //   return this.parkingAppSlotsService.findAll();
   // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.parkingAppSlotsService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.parkingAppSlotsService.findOne(id);
+  }
 
   // @Patch(':id')
   // update(
