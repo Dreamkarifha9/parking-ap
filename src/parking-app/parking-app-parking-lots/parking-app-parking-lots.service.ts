@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { SearchParkingLotDto } from 'src/parking-lot/dto/search-parking-lot.dto';
 import { ParkingLotService } from 'src/parking-lot/parking-lot.service';
 import { SearchVWParkingSlotDto } from 'src/slots/dto/search-vw-parking-slot.dto';
 import { VWParkingSlotsService } from 'src/slots/vw-parking-slots.service';
@@ -18,7 +19,11 @@ export class ParkingAppParkingLotsService {
     return this.parkingLotService.create(createParkingAppParkingLotDto);
   }
 
-  findAll(query: SearchVWParkingSlotDto) {
+  findAll(query: SearchParkingLotDto) {
+    return this.parkingLotService.findAll(query);
+  }
+
+  findDetail(query: SearchVWParkingSlotDto) {
     return this.vWParkingSlotsService.findAll(query);
   }
 

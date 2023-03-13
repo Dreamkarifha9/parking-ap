@@ -21,6 +21,8 @@ import {
 import { ResponseParkingLotDto } from './dto/response-parking-lot.dto';
 import { VWParkingSlotsDto } from 'src/slots/dto/vw-parking-slots.dto';
 import { SearchVWParkingSlotDto } from 'src/slots/dto/search-vw-parking-slot.dto';
+import { SearchParkingLotDto } from 'src/parking-lot/dto/search-parking-lot.dto';
+import { ParkingLotsDto } from 'src/parking-lot/dto/parking-lots.dto';
 
 @ApiTags('App::ParkingApp::ParkingLots')
 @Controller('parking-app-parking-lots')
@@ -42,18 +44,32 @@ export class ParkingAppParkingLotsController {
     );
   }
 
+  @Get('')
+  @ApiOkResponse({
+    description: 'A successful response.',
+    type: ParkingLotsDto,
+  })
+  findAll(
+    @Query()
+    query: SearchParkingLotDto,
+  ) {
+    query.deleted = query.deleted || false;
+    query.size = query.size || 20;
+    return this.parkingAppParkingLotsService.findAll(query);
+  }
+
   @Get('details')
   @ApiOkResponse({
     description: 'A successful response.',
     type: VWParkingSlotsDto,
   })
-  findAll(
+  findDetail(
     @Query()
     query: SearchVWParkingSlotDto,
   ) {
     query.deleted = query.deleted || false;
     query.size = query.size || 20;
-    return this.parkingAppParkingLotsService.findAll(query);
+    return this.parkingAppParkingLotsService.findDetail(query);
   }
 
   // @Get(':id')
