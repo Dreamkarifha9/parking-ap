@@ -2,6 +2,24 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## ENV.
+
+```
+PORT=
+
+POSTGRES_DATABASE=
+
+POSTGRES_HOST=
+
+POSTGRES_LOGGING=
+
+POSTGRES_PASSWORD=
+
+POSTGRES_PORT=
+
+POSTGRES_USERNAME=
+```
+
 ## Docker build
 
 ```docker
