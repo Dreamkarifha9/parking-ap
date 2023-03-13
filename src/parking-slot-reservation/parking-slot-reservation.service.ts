@@ -67,7 +67,10 @@ export class ParkingSlotReservationService {
       );
       // update status isAvailable in slot table
       const findSlot = await this.slotsService.findOne(slotId);
-      await this.slotsService.update(findSlot, { isAvailable: true });
+      await this.slotsService.update(findSlot, {
+        isAvailable: true,
+        updatedAt: new Date(),
+      });
       this.logger.debug(`findNearbyExit ${JSON.stringify(findNearbyExit)}`);
       return { suscuess: true };
     } else {
@@ -94,10 +97,14 @@ export class ParkingSlotReservationService {
     await this.update(reservation, {
       exitTimestamp: new Date(),
       durationInMinutes: difInMinutes,
+      updatedAt: new Date(),
     });
     // update status isAvailable in slot table
     const findSlot = await this.slotsService.findOne(slotId);
-    await this.slotsService.update(findSlot, { isAvailable: false });
+    await this.slotsService.update(findSlot, {
+      isAvailable: false,
+      updatedAt: new Date(),
+    });
     return { suscuess: true };
   }
   async findOneBySearch(q: Partial<ParkingSlotReservationDto>) {
