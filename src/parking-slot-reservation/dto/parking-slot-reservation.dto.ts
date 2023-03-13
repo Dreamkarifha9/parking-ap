@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+    IsEnum,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+} from 'class-validator';
 import { BaseDataDto } from '../../shared/dtos';
 import { ECarSize } from '../../shared/enums';
 
@@ -35,8 +41,9 @@ export class ParkingSlotReservationDto extends BaseDataDto {
     @IsOptional()
     bookingDate?: Date;
 
-    @ApiProperty()
+    @ApiProperty({ default: null })
     @IsString()
+    @IsNotEmpty()
     @Type(() => String)
     numberPlate: string;
 
