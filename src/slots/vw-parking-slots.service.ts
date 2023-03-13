@@ -33,10 +33,15 @@ export class VWParkingSlotsService {
             deleted,
             sortBy,
             orderBy,
+            slotNumber,
+            floorNumber,
             numberPlate,
             blockSize,
+            slotIsAvailable,
         } = search;
-
+        this.logger.debug(`active`, active);
+        this.logger.debug(`deleted`, deleted);
+        this.logger.debug(`slotIsAvailable`, slotIsAvailable);
         const { commonQueries, commonParams } = getCommonQueryForBuilder(
             'vw_parking_slots',
             deleted,
@@ -84,6 +89,16 @@ export class VWParkingSlotsService {
         if (querySql) {
             builder.andWhere(querySql, params);
         }
+        if (slotNumber) {
+            builder.andWhere('vw_parking_slots.slotNumber = :slotNumber', {
+                slotNumber,
+            });
+        }
+        if (floorNumber) {
+            builder.andWhere('vw_parking_slots.floorNumber = :floorNumber', {
+                floorNumber,
+            });
+        }
         if (numberPlate) {
             builder.andWhere('vw_parking_slots.numberPlate = :numberPlate', {
                 numberPlate,
@@ -92,6 +107,11 @@ export class VWParkingSlotsService {
         if (blockSize) {
             builder.andWhere('vw_parking_slots.blockSize = :blockSize', {
                 blockSize,
+            });
+        }
+        if (slotIsAvailable != undefined) {
+            builder.andWhere('vw_parking_slots.slotIsAvailable = :slotIsAvailable', {
+                slotIsAvailable,
             });
         }
         const [data, count] = await builder
