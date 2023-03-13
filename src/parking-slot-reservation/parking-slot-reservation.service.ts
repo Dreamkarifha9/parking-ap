@@ -17,6 +17,7 @@ import { plainToInstance } from 'class-transformer';
 import { ParkingSlotReservationsDto } from './dto/parking-slot-reservations.dto';
 import { SearchParkingSlotReservationDto } from './dto/search-parking-slot-reservation.dto';
 import { differenceInMinutes } from 'date-fns';
+
 @Injectable()
 export class ParkingSlotReservationService {
   private readonly logger: Logger = new Logger(
@@ -140,7 +141,7 @@ export class ParkingSlotReservationService {
     );
 
     const { skip, limit } = calculatePaging(page, size);
-    // NOTED: Refered to this stackoverfow [https://stackoverflow.com/a/57648345]
+
     const builder = this.parkingSlotReservationRepository.createQueryBuilder(
       'parking_slot_reservations',
     );
@@ -231,9 +232,5 @@ export class ParkingSlotReservationService {
       updateParkingSlotReservation,
       { reload: true },
     );
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} parkingSlotReservation`;
   }
 }
