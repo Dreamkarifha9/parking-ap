@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+    api:
+        # image: thomas-oliver/nestjs-dockerized 
+        build:
+            dockerfile: Dockerfile
+            context: .
+        depends_on: 
+            - postgres
+        environment: 
+            DATABASE_URL: postgres
+            NODE_ENV: development
+            PORT: 3000
+            POSTGRES_DATABASE: parking_development
+            POSTGRES_HOST: postgres
+            POSTGRES_LOGGING: true
+            POSTGRES_PASSWORD: password
+            POSTGRES_PORT: 5432
+            POSTGRES_USERNAME: user
+        ports:
+            - "8086:3000"
+
+    postgres:
+        image: postgres:10.4
+        ports:
+            - "35000:5432"
+        environment: 
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: parking_development
