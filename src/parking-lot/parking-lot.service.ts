@@ -47,7 +47,7 @@ export class ParkingLotService {
     this.logger.debug(`foundParkingLot ${JSON.stringify(foundParkingLot)}`);
     if (foundParkingLot)
       throw new HttpException(
-        `parkingLot name ${name} has been used.`,
+        `parkingLot name has been used.`,
         HttpStatus.CONFLICT,
       );
     return foundParkingLot;

@@ -69,13 +69,10 @@ export class ParkingAppFloorsController {
   //   return this.parkingAppFloorsService.findOne(+id);
   // }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateParkingAppFloorDto: UpdateParkingAppFloorDto,
-  // ) {
-  //   return this.parkingAppFloorsService.update(+id, updateParkingAppFloorDto);
-  // }
+  @Patch()
+  update(@Body() updateParkingAppFloorDto: UpdateParkingAppFloorDto) {
+    return this.parkingAppFloorsService.update(updateParkingAppFloorDto);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

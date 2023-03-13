@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateParkingAppFloorDto } from './create-parking-app-floor.dto';
+import { UpdateFloorsDto } from 'src/floors/dto/update-floor.dto';
 
-export class UpdateParkingAppFloorDto extends PartialType(CreateParkingAppFloorDto) {}
+export class UpdateParkingAppFloorDto extends UpdateFloorsDto { }

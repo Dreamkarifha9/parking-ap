@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { SearchFloor } from 'src/floors/dto/search-block.dto';
 import { FloorsService } from 'src/floors/floors.service';
 import { VWFloorService } from 'src/floors/vw-floors.service';
@@ -31,8 +31,8 @@ export class ParkingAppFloorsService {
     return `This action returns a #${id} parkingAppFloor`;
   }
 
-  update(id: number, updateParkingAppFloorDto: UpdateParkingAppFloorDto) {
-    return `This action updates a #${id} parkingAppFloor`;
+  async update(updateParkingAppFloorDto: UpdateParkingAppFloorDto) {
+    return this.floorsService.update(updateParkingAppFloorDto.floors);
   }
 
   remove(id: number) {

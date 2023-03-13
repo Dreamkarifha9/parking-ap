@@ -58,7 +58,7 @@ export class BlocksService {
     this.logger.debug(`foundBlock ${JSON.stringify(foundBlock)}`);
     if (foundBlock)
       throw new HttpException(
-        `block code ${blockCode} has been used.`,
+        `block code  has been used.`,
         HttpStatus.CONFLICT,
       );
     return foundBlock;

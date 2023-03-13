@@ -147,11 +147,28 @@ export class FloorsService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} floor`;
+    return this.floorsRepository.findOne({ where: { id } });
+  }
+  async findOneBySearch(q: Partial<FloorDto>) {
+    return this.floorsRepository.findOneBy({ ...q });
   }
 
-  update(id: number, updateFloorDto: UpdateFloorDto) {
-    return `This action updates a #${id} floor`;
+  async update(updateFloorDto: UpdateFloorDto[]) {
+    // Reason => https://github.com/typeorm/typeorm/issues/5131#issuecomment-1030895756
+    for (let i = 0; i < updateFloorDto.length; i++) {
+      const { id: floorId, blockId } = updateFloorDto[i];
+      const foundFloor = await this.findOneBySearch({ id: floorId, blockId });
+      if (!foundFloor)
+        throw new HttpException(
+          `floorId or blockId notFound`,
+          HttpStatus.BAD_REQUEST,
+        );
+      const mapObject = Object.assign(foundFloor, updateFloorDto[i]);
+      return await this.floorsRepository.update(floorId, {
+        ...mapObject,
+        updatedAt: new Date(),
+      });
+    }
   }
 
   remove(id: number) {
