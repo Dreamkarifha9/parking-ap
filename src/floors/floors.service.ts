@@ -169,11 +169,12 @@ export class FloorsService {
           HttpStatus.BAD_REQUEST,
         );
       const mapObject = Object.assign(foundFloor, updateFloorDto[i]);
-      return await this.floorsRepository.update(floorId, {
+      await this.floorsRepository.update(floorId, {
         ...mapObject,
         updatedAt: new Date(),
       });
     }
+    return { suscuess: true };
   }
 
   remove(id: number) {

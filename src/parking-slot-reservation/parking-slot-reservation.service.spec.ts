@@ -40,25 +40,26 @@ const parkingSlotReservationEntityList: Partial<ParkingSlotReservation>[] = [
     carSize: ECarSize.SMAILL,
   },
 ];
-class ApiServiceMock {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  findAll() {
-    return parkingSlotReservationEntityList;
-  }
-}
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 describe('ParkingSlotReservationService', () => {
   let parkingSlotReservationService: ParkingSlotReservationService;
-  let parkingSlotReservationRepository: Repository<ParkingSlotReservation>;
+  let parkingSlotReservationRepository: MockRepository<ParkingSlotReservation>;
 
   const mockCreateParkingSlotReservation = {
     suscuess: true,
   };
 
+  const mockRepository = () => ({
+    createQueryBuilder: jest.fn().mockRejectedValue({
+      innerJoint: jest.fn().mockReturnThis(),
+      select: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getRawMany: jest.fn().mockReturnThis(),
+    }),
+    findAll: jest.fn(),
+  });
+
   beforeEach(async () => {
-    const ApiServiceProvider = {
-      provide: ParkingSlotReservationService,
-      useClass: ApiServiceMock,
-    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ParkingSlotReservationService,
@@ -66,16 +67,7 @@ describe('ParkingSlotReservationService', () => {
         SlotsService,
         {
           provide: getRepositoryToken(ParkingSlotReservation),
-          useValue: {
-            checkIn: jest.fn(),
-            checkOut: jest.fn(),
-            findOneBySearch: jest.fn(),
-            findAll: jest
-              .fn()
-              .mockResolvedValue(parkingSlotReservationEntityList),
-            findOneByNumberPlate: jest.fn(),
-            update: jest.fn(),
-          },
+          useValue: mockRepository,
         },
         {
           provide: getRepositoryToken(VWParkingSlot),
@@ -87,7 +79,6 @@ describe('ParkingSlotReservationService', () => {
           provide: getRepositoryToken(Slot),
           useValue: {},
         },
-        ApiServiceProvider,
       ],
     }).compile();
 
@@ -95,7 +86,7 @@ describe('ParkingSlotReservationService', () => {
       ParkingSlotReservationService,
     );
     parkingSlotReservationRepository = module.get<
-      Repository<ParkingSlotReservation>
+      MockRepository<ParkingSlotReservation>
     >(getRepositoryToken(ParkingSlotReservation));
   });
 
@@ -104,7 +95,18 @@ describe('ParkingSlotReservationService', () => {
   });
 
   describe('findAll', () => {
+    it('parkingSlotReservationRepository createQueryBuilder in successfully', async () => {
+      expect(
+        parkingSlotReservationRepository.createQueryBuilder,
+      ).toHaveBeenCalledTimes(1);
+    });
     it('check in successfully', async () => {
+      jest
+        .spyOn(
+          parkingSlotReservationRepository.createQueryBuilder(),
+          'getRawMany',
+        )
+        .mockResolvedValue([]);
       const data = {
         deleted: false,
         size: 20,
