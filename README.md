@@ -24,7 +24,7 @@ POSTGRES_USERNAME=
 
 ```docker
 docker build --tag parking-api .
-docker compose-up
+docker-compose up
 
 หลังจาก ติดตั่งเสร็จ ให้ นำไฟล์ migration script ไปรันใน DB
 ```
