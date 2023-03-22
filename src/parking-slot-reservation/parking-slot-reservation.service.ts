@@ -227,10 +227,16 @@ export class ParkingSlotReservationService {
       parkingSlotReservation,
       dto,
     );
+    this.identity(['t1', 't1']);
 
     return this.parkingSlotReservationRepository.save(
       updateParkingSlotReservation,
       { reload: true },
     );
+  }
+
+  identity<Type>(arg: Type[]): Type[] {
+    this.logger.debug(arg.length);
+    return arg;
   }
 }

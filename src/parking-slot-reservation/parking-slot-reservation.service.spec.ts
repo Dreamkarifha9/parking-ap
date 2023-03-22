@@ -40,43 +40,36 @@ const parkingSlotReservationEntityList: Partial<ParkingSlotReservation>[] = [
     carSize: ECarSize.SMAILL,
   },
 ];
-type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+
 describe('ParkingSlotReservationService', () => {
   let parkingSlotReservationService: ParkingSlotReservationService;
-  let parkingSlotReservationRepository: MockRepository<ParkingSlotReservation>;
 
   const mockCreateParkingSlotReservation = {
     suscuess: true,
   };
 
-  const mockRepository = () => ({
-    createQueryBuilder: jest.fn().mockRejectedValue({
-      innerJoint: jest.fn().mockReturnThis(),
-      select: jest.fn().mockReturnThis(),
-      where: jest.fn().mockReturnThis(),
-      getRawMany: jest.fn().mockReturnThis(),
-    }),
-    findAll: jest.fn(),
-  });
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ParkingSlotReservationService,
-        VWParkingSlotsService,
-        SlotsService,
         {
-          provide: getRepositoryToken(ParkingSlotReservation),
-          useValue: mockRepository,
+          provide: ParkingSlotReservationService,
+          useValue: {
+            findAll: jest
+              .fn()
+              .mockResolvedValue(parkingSlotReservationEntityList),
+            findOneByNumberPlate: jest
+              .fn()
+              .mockResolvedValue(parkingSlotReservationEntityList[0]),
+          },
         },
         {
-          provide: getRepositoryToken(VWParkingSlot),
+          provide: VWParkingSlotsService,
           useValue: {
             findOneBySearch: jest.fn(),
           },
         },
         {
-          provide: getRepositoryToken(Slot),
+          provide: SlotsService,
           useValue: {},
         },
       ],
@@ -85,9 +78,6 @@ describe('ParkingSlotReservationService', () => {
     parkingSlotReservationService = module.get<ParkingSlotReservationService>(
       ParkingSlotReservationService,
     );
-    parkingSlotReservationRepository = module.get<
-      MockRepository<ParkingSlotReservation>
-    >(getRepositoryToken(ParkingSlotReservation));
   });
 
   it('should be defined', () => {
@@ -95,25 +85,22 @@ describe('ParkingSlotReservationService', () => {
   });
 
   describe('findAll', () => {
-    it('parkingSlotReservationRepository createQueryBuilder in successfully', async () => {
-      expect(
-        parkingSlotReservationRepository.createQueryBuilder,
-      ).toHaveBeenCalledTimes(1);
-    });
-    it('check in successfully', async () => {
-      jest
-        .spyOn(
-          parkingSlotReservationRepository.createQueryBuilder(),
-          'getRawMany',
-        )
-        .mockResolvedValue([]);
+    it('findAll successfully', async () => {
       const data = {
         deleted: false,
         size: 20,
       };
-      const reuslt = await parkingSlotReservationService.findAll(data);
+      const result = await parkingSlotReservationService.findAll(data);
+      expect(result).toEqual(parkingSlotReservationEntityList);
+    });
+  });
 
-      expect(reuslt).toEqual(parkingSlotReservationEntityList);
+  describe('findOneNumbePlate', () => {
+    it('findOneByNumberPlate', async () => {
+      const result = await parkingSlotReservationService.findOneByNumberPlate(
+        parkingSlotReservationEntityList[0].numberPlate,
+      );
+      expect(result).toEqual(parkingSlotReservationEntityList[0]);
     });
   });
 });

@@ -8,22 +8,22 @@ import { VWParkingLot } from './entities/vw-parking-lot.entity';
 
 @Injectable()
 export class VWParkingLotService {
-    private readonly logger: Logger = new Logger(VWParkingLotService.name);
-    constructor(
-        @InjectRepository(VWParkingLot)
-        private readonly vWParkingLotsRepository: Repository<VWParkingLot>,
-    ) { }
+  private readonly logger: Logger = new Logger(VWParkingLotService.name);
+  constructor(
+    @InjectRepository(VWParkingLot)
+    private readonly vWParkingLotsRepository: Repository<VWParkingLot>,
+  ) { }
 
-    async findSummary(): Promise<VWParkingLotDto[]> {
-        const result = await this.vWParkingLotsRepository.find();
-        const newArray = result.map((plainObject) =>
-            plainToClass(VWParkingLotDto, plainObject),
-        );
+  async findSummary(): Promise<VWParkingLotDto[]> {
+    const result = await this.vWParkingLotsRepository.find();
+    const newArray = result.map((plainObject) =>
+      plainToClass(VWParkingLotDto, plainObject),
+    );
 
-        return newArray;
-    }
+    return newArray;
+  }
 
-    async findOneBySearch(q: Partial<VWParkingLotDto>) {
-        return this.vWParkingLotsRepository.findOneBy({ ...q });
-    }
+  async findOneBySearch(q: Partial<VWParkingLotDto>) {
+    return this.vWParkingLotsRepository.findOneBy({ ...q });
+  }
 }
